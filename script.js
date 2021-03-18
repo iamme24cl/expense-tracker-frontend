@@ -21,6 +21,6 @@ function addTransactionsToDOM(transaction) {
 
 // Event Listeners
 // Get transactions upon DOM load
-document.addEventListener('DOMContentLoaded', () => {
-  getTransactions();
-});
+// document.addEventListener('DOMContentLoaded', () => {
+//   getTransactions();
+// });
