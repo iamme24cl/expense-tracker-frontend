@@ -1,13 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital@1&display=swap');
 
+:root {
+  --modal-duration: 1s;
+  --primary-color: #7c5dfa;
+  --secondary-color: ;
+}
+
 * {
   box-sizing: border-box;
 }
 
 body {
+  background-color: #f2f2f2;
   font-family: 'Lato', sans-serif;
   margin: 0;
+  transition: transform 0.3s ease;
 }
+
+
 
 nav {
   background-color: #27282e;
@@ -19,6 +29,8 @@ nav {
   height: 100vh;
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
+  z-index: 100;
+  transform: translateX(-100%);
 }
 
 nav .logo {
@@ -55,3 +67,35 @@ nav ul li a {
 nav ul li:hover {
   text-decoration: underline;
 }
+
+header {
+  background-color: var(--primary-color);
+  color: #fff;
+  position: relative;
+  text-align: center;
+  padding: 40px 15px;
+}
+
+
+
+.toggle {
+  background-color: rgba(0, 0, 0, 0.3);
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding-top: 5px;
+  border-radius: 5px;
+}
+
+.cta-btn {
+  position: absolute;
+  top: 45px;
+  right: 40px;
+}
+
+
+
+
+
+
+
