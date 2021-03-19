@@ -1,4 +1,14 @@
 const expenseApi = 'http://localhost:3000/api/v1/accounts/1/transactions';
+const toggleBtn = document.getElementById('toggle');
+const balance = document.getElementById('balance');
+const income = document.getElementById('income');
+const expense = document.getElementById('expense');
+const list = document.getElementById('transactions-list');
+const openModal = document.getElementById('open');
+const closeModal = document.getElementById('close');
+const modal = document.getElementById('modal');
+const form = document.getElementById('form');
+
 
 // Fetch transactions from api
 function getTransactions() {
