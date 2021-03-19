@@ -96,7 +96,6 @@ header {
   justify-content: center;
   min-height: 40vh;
   margin: 30px auto;
-  position: relative;
 }
 
 h1 {
@@ -167,6 +166,7 @@ h4 {
   /* position: relative; */
   padding: 10px;
   margin: 10px 0;
+  position: relative;
 }
 
 .transactions-list li.income {
@@ -175,6 +175,18 @@ h4 {
 
 .transactions-list li.expense {
   border-top: 5px solid #c0392b;
+}
+
+.delete-btn {
+  position: absolute;
+  top: 5px;
+  right: -30px;
+  opacity: 0;
+  padding: 2px 8px;
+}
+
+.transactions-list li:hover .delete-btn {
+  opacity: 1;
 }
 
 .cta-btn {
