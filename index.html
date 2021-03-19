@@ -4,7 +4,9 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="style.css">
@@ -27,10 +29,9 @@
       <i class="fa fa-bars fa-2x"></i>
     </button>
 
-    <h1>Expense Tracker</h1>
-    <button type="button" class=" cta-btn btn btn-primary">+ Add Transaction</button>
+    <h1>Expense Tracker</h1>   
   </header>
-
+  
   <div class="container">
     <div class="balance">
       <h4>Your Balance</h4>
@@ -51,17 +52,50 @@
 
     <h3>Transactions History</h3>
     <ul id="transactions-list" class="transactions-list">
-      <li class="expense">Cash <span class="transaction-amt">-$400</span><button class="btn btn-danger delete-btn">x</button></li>
-      <li class="expense">Cash <span class="transaction-amt">-$400</span><button class="btn btn-danger delete-btn">x</button></li>
-      <li class="expense">Cash <span class="transaction-amt">-$400</span><button class="btn btn-danger delete-btn">x</button></li>
-      
+      <li class="expense">Cash <span class="transaction-amt">-$400</span><button class="btn btn-danger delete-btn"><i class="fa fa-times" aria-hidden="true"></i>
+      </button></li>
+      <li class="income">Cash <span class="transaction-amt">-$400</span><button class="btn btn-danger delete-btn"><i class="fa fa-times" aria-hidden="true"></i>
+      </button></li>
+      <li class="expense">Cash <span class="transaction-amt">-$400</span><button class="btn btn-danger delete-btn"><i class="fa fa-times" aria-hidden="true"></i>
+      </button></li>      
     </ul>
 
-
+    <button type="button" class="cta-btn btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i>
+      ADD TRANSACTION</button>
   </div>
 
   <!-- Modal -->
   <div class="modal-container" id="modal">
+    <div class="form-modal">
+      <button class="close-btn" id="close">
+        <i class="fa fa-times"></i>
+      </button>
+      <div class="modal-header">
+        <h4>Add Transaction</h4>
+      </div>
+      <form id="form" class="modal-form">
+        <div class="form-group">
+          <label for="description">Description</label>
+          <input type="text" id="description" placeholder="Enter description" class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label for="kind">Transaction Kind</label>
+          <select class="form-control" id="kind">
+            <option>Select</option>
+            <option value="income">Income</option>
+            <option value="expense">Expense</option>           
+          </select>
+        </div>
+      
+        <div class="form-group">
+          <label for="amount">Amount</label>
+          <input type="text" id="amount" placeholder="Enter amount" class="form-control">
+        </div>
+    
+        <input type="submit" value="Submit" class="submit-btn btn btn-primary">
+      </form>
+    </div>
 
   </div>
   
