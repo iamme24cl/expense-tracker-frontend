@@ -18,16 +18,20 @@ body {
   transition: transform 0.3s ease;
 }
 
+body.show-nav {
+  /* Should be the width of the nav */
+  transform: translateX(100px);
+}
+
 nav {
   background-color: #27282e;
+  border-right: 2px solid rgba(200, 200, 200, 0.1);
   color: #fff;
   position: fixed;
   top: 0;
   left: 0;
   width: 100px;
   height: 100vh;
-  border-top-right-radius: 15px;
-  border-bottom-right-radius: 15px;
   z-index: 100;
   transform: translateX(-100%);
 }
@@ -207,6 +211,9 @@ h4 {
   width: auto;
 }
 
+.modal-container.show-modal {
+  display: block;
+}
 
 .form-modal {
   background-color: #f2f2f2;

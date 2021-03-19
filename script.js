@@ -9,6 +9,26 @@ const closeModal = document.getElementById('close');
 const modal = document.getElementById('modal');
 const form = document.getElementById('form');
 
+// Toggle nav
+toggleBtn.addEventListener('click', () => {
+  document.body.classList.toggle('show-nav');
+});
+
+// Show Modal
+openModal.addEventListener('click', () => {
+  modal.classList.add('show-modal');
+});
+
+// Close Modal
+closeModal.addEventListener('click', () => {
+  modal.classList.remove('show-modal');
+});
+
+// Close Modal on outside click
+window.addEventListener('click', e => {
+  e.target == modal ? modal.classList.remove('show-modal') : false;
+});
+
 
 // Fetch transactions from api
 function getTransactions() {
