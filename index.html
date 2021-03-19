@@ -32,7 +32,29 @@
   </header>
 
   <div class="container">
-    
+    <div class="balance">
+      <h4>Your Balance</h4>
+      <h1 id="balance">$0.00</h1>
+    </div>
+
+    <div class="inc-exp-container">
+      <div>
+        <h4>Income</h4>
+        <p id="income" class="money income">+$0.00</p>
+      </div>
+
+      <div>
+        <h4>Expense</h4>
+        <p id="expense" class="money expense">-$0.00</p>
+      </div>
+    </div>
+
+    <h3>Transactions History</h3>
+    <ul id="transactions-list" class="transactions-list">
+      <li class="expense">Cash <span class="transaction-amt">-$400</span><button class="delete-btn">x</button></li>
+    </ul>
+
+
   </div>
 
   <!-- Modal -->
