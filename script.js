@@ -1,7 +1,6 @@
 const expenseApi = 'http://localhost:3000/api/v1/accounts/1/transactions';
 const toggleBtn = document.getElementById('toggle');
-const income = document.getElementById('income');
-const expense = document.getElementById('expense');
+
 const list = document.getElementById('transactions-list');
 const openModal = document.getElementById('open');
 const closeModal = document.getElementById('close');
@@ -35,7 +34,7 @@ function getTransactions() {
     .then(response => response.json())
     .then(json => {
       json.data.forEach(transaction => {
-        // console.log(transaction);
+        console.log(transaction);
         addTransactionsToDOM(transaction);
       });
     });
@@ -45,6 +44,8 @@ function getTransactions() {
 function updateDOM(transaction) {
   const balance = document.getElementById('balance');
   const accountBalance = transaction.attributes.account.balance;
+  const income = document.getElementById('income');
+  const expense = document.getElementById('expense');
 
   balance.innerText = `$${accountBalance}`;
   if (accountBalance < 0) {
@@ -52,6 +53,9 @@ function updateDOM(transaction) {
   } else {
     balance.classList.remove('negative-balance');
   }
+
+  income.innerText = `+$${transaction.attributes.account.total_income}`;
+  expense.innerText = `-$${transaction.attributes.account.total_expense}`;
 }
 
 // Add Transactions to DOM
