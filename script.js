@@ -1,6 +1,5 @@
 const expenseApi = 'http://localhost:3000/api/v1/accounts/1/transactions';
 const toggleBtn = document.getElementById('toggle');
-const balance = document.getElementById('balance');
 const income = document.getElementById('income');
 const expense = document.getElementById('expense');
 const list = document.getElementById('transactions-list');
@@ -42,6 +41,12 @@ function getTransactions() {
     });
 }
 
+// Update the number values in DOM
+function updateDOM(transaction) {
+  const balance = document.getElementById('balance');
+  balance.innerText = `$${transaction.attributes.account.balance}`;
+}
+
 // Add Transactions to DOM
 function addTransactionsToDOM(transaction) {
 
@@ -58,6 +63,8 @@ function addTransactionsToDOM(transaction) {
   </li>
   `
   list.appendChild(transactionLi);
+
+  updateDOM(transaction);
 }
 
 
