@@ -75,7 +75,7 @@ header {
   background-color: var(--primary-color);
   color: #fff;
   text-align: center;
-  padding: 40px 15px;
+  padding: 30px 15px;
 }
 
 /* Toggle Navbar */
@@ -98,7 +98,7 @@ header {
   align-items: center;
   justify-content: center;
   min-height: 40vh;
-  margin: 30px auto;
+  margin: 15px auto 30px;
 }
 
 h1 {
@@ -113,7 +113,6 @@ h3 {
 
 h4 {
   margin: 0;
-  /* text-transform: uppercase; */
 }
 
 .inc-exp-container {
@@ -122,7 +121,7 @@ h4 {
   padding: 20px;
   display: flex;
   justify-content: space-between;
-  margin: 20px auto;
+  margin: 20px auto 15px;
   width: 350px;
 }
 
@@ -157,7 +156,7 @@ h4 {
   list-style-type: none;
   padding: 0;
   width: 450px;
-  /* margin-bottom: 40px; */
+  margin-bottom: 40px;
 }
 
 .transactions-list li {
@@ -166,25 +165,26 @@ h4 {
   color: #333;
   display: flex;
   justify-content: space-between;
-  padding: 10px;
-  margin: 10px 0;
+  padding: 5px;
+  margin: 0;
   position: relative;
+  width: 100%;
 }
 
 .transactions-list li.income {
-  border-top: 5px solid #2ecc71;
+  border-right: 5px solid #2ecc71;
 }
 
 .transactions-list li.expense {
-  border-top: 5px solid #c0392b;
+  border-right: 5px solid #c0392b;
 }
 
 .delete-btn {
   position: absolute;
-  top: 5px;
-  right: -32px;
+  top: 3px;
+  right: -35px;
   opacity: 0;
-  padding: 2px 8px;
+  padding: 0 5px;
 }
 
 .transactions-list li:hover .delete-btn {

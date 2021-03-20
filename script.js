@@ -44,13 +44,26 @@ function getTransactions() {
 
 // Add Transactions to DOM
 function addTransactionsToDOM(transaction) {
-  
+
+  let sign = transaction.attributes.kind == "income" ? "+" : "-";
+  const transactionLi = document.createElement('li');
+
+  transactionLi.innerHTML = `
+  <li class="${transaction.attributes.kind}">
+    ${transaction.attributes.description} 
+    <span class="transaction-amt">${sign}${transaction.attributes.amount}</span>
+    <button class="btn btn-danger delete-btn">
+      <i class="fa fa-times" aria-hidden="true"></i>
+    </button>
+  </li>
+  `
+  list.appendChild(transactionLi);
 }
 
 
 
 // Event Listeners
 // Get transactions upon DOM load
-// document.addEventListener('DOMContentLoaded', () => {
-//   getTransactions();
-// });
+document.addEventListener('DOMContentLoaded', () => {
+  getTransactions();
+});
