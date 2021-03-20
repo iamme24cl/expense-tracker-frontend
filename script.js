@@ -1,9 +1,6 @@
 const expenseApi = 'http://localhost:3000/api/v1/accounts/1/transactions';
+
 const toggleBtn = document.getElementById('toggle');
-const balance = document.getElementById('balance');
-const income = document.getElementById('income');
-const expense = document.getElementById('expense');
-const list = document.getElementById('transactions-list');
 const openModal = document.getElementById('open');
 const closeModal = document.getElementById('close');
 const modal = document.getElementById('modal');
@@ -44,13 +41,46 @@ function getTransactions() {
 
 // Add Transactions to DOM
 function addTransactionsToDOM(transaction) {
-  
+
+  const list = document.getElementById('transactions-list');
+  let sign = transaction.attributes.kind == "income" ? "+" : "-";
+  const transactionLi = document.createElement('li');
+
+  transactionLi.innerHTML = `
+  <li class="${transaction.attributes.kind}">
+    ${transaction.attributes.description} 
+    <span class="transaction-amt">${sign}${transaction.attributes.amount}</span>
+    <button class="btn btn-danger delete-btn">
+      <i class="fa fa-times" aria-hidden="true"></i>
+    </button>
+  </li>
+  `
+  list.appendChild(transactionLi);
+
+  updateDOM(transaction);
 }
 
+// Update the number values in DOM
+function updateDOM(transaction) {
+  const balance = document.getElementById('balance');
+  const accountBalance = transaction.attributes.account.balance;
+  const income = document.getElementById('income');
+  const expense = document.getElementById('expense');
+
+  balance.innerText = `$${accountBalance}`;
+  if (accountBalance < 0) {
+    balance.classList.add('negative-balance');
+  } else {
+    balance.classList.remove('negative-balance');
+  }
+
+  income.innerText = `+$${transaction.attributes.account.total_income}`;
+  expense.innerText = `-$${transaction.attributes.account.total_expense}`;
+}
 
 
 // Event Listeners
 // Get transactions upon DOM load
-// document.addEventListener('DOMContentLoaded', () => {
-//   getTransactions();
-// });
+document.addEventListener('DOMContentLoaded', () => {
+  getTransactions();
+});
