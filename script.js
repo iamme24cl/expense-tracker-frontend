@@ -6,26 +6,6 @@ const closeModal = document.getElementById('close');
 const modal = document.getElementById('modal');
 const form = document.getElementById('form');
 
-// Toggle nav
-toggleBtn.addEventListener('click', () => {
-  document.body.classList.toggle('show-nav');
-});
-
-// Show Modal
-openModal.addEventListener('click', () => {
-  modal.classList.add('show-modal');
-});
-
-// Close Modal
-closeModal.addEventListener('click', () => {
-  modal.classList.remove('show-modal');
-});
-
-// Close Modal on outside click
-window.addEventListener('click', e => {
-  e.target == modal ? modal.classList.remove('show-modal') : false;
-});
-
 
 // Fetch transactions from api
 function getTransactions() {
@@ -33,7 +13,7 @@ function getTransactions() {
     .then(response => response.json())
     .then(json => {
       json.data.forEach(transaction => {
-        console.log(transaction);
+        // console.log(transaction);
         addTransactionsToDOM(transaction);
       });
     });
@@ -78,9 +58,63 @@ function updateDOM(transaction) {
   expense.innerText = `-$${transaction.attributes.account.total_expense}`;
 }
 
+// Add New transaction
+function addNewTransaction(transaction) {
+  fetch(expenseApi, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify(transaction)
+  })
+    .then(response => response.json())
+    .then(newTransaction => {
+      addTransactionsToDOM(newTransaction.data);
+      updateDOM(newTransaction.data);
+    });
+    // .then(newTransaction => console.log(newTransaction.data));
+}
+
 
 // Event Listeners
 // Get transactions upon DOM load
 document.addEventListener('DOMContentLoaded', () => {
   getTransactions();
 });
+
+// Toggle nav
+toggleBtn.addEventListener('click', () => {
+  document.body.classList.toggle('show-nav');
+});
+
+// Show Modal
+openModal.addEventListener('click', () => {
+  modal.classList.add('show-modal');
+});
+
+// Close Modal
+closeModal.addEventListener('click', () => {
+  modal.classList.remove('show-modal');
+});
+
+// Close Modal on outside click
+window.addEventListener('click', e => {
+  e.target == modal ? modal.classList.remove('show-modal') : false;
+});
+
+// 
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  const description = document.getElementById('description').value;
+  const kind = document.getElementById('kind').value;
+  const amount = +document.getElementById('amount').value;
+  const transaction = {
+    description: description,
+    amount: amount,
+    kind: kind
+  };
+  addNewTransaction(transaction);
+  modal.classList.remove('show-modal');
+});
+
