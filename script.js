@@ -35,7 +35,7 @@ function getTransactions() {
     .then(response => response.json())
     .then(json => {
       json.data.forEach(transaction => {
-        console.log(transaction);
+        // console.log(transaction);
         addTransactionsToDOM(transaction);
       });
     });
@@ -44,7 +44,14 @@ function getTransactions() {
 // Update the number values in DOM
 function updateDOM(transaction) {
   const balance = document.getElementById('balance');
-  balance.innerText = `$${transaction.attributes.account.balance}`;
+  const accountBalance = transaction.attributes.account.balance;
+
+  balance.innerText = `$${accountBalance}`;
+  if (accountBalance < 0) {
+    balance.classList.add('negative-balance');
+  } else {
+    balance.classList.remove('negative-balance');
+  }
 }
 
 // Add Transactions to DOM

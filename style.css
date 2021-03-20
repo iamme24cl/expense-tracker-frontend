@@ -105,6 +105,10 @@ h1 {
   letter-spacing: 1px;
 }
 
+.negative-balance {
+  color: #c0392b;
+}
+
 h3 {
   border-bottom: 1px solid #bbb;
   padding-bottom: 10px;
