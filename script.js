@@ -116,5 +116,6 @@ form.addEventListener('submit', e => {
   };
   addNewTransaction(transaction);
   modal.classList.remove('show-modal');
+  e.target.reset();
 });
 
