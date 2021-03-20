@@ -1,7 +1,6 @@
 const expenseApi = 'http://localhost:3000/api/v1/accounts/1/transactions';
-const toggleBtn = document.getElementById('toggle');
 
-const list = document.getElementById('transactions-list');
+const toggleBtn = document.getElementById('toggle');
 const openModal = document.getElementById('open');
 const closeModal = document.getElementById('close');
 const modal = document.getElementById('modal');
@@ -40,27 +39,10 @@ function getTransactions() {
     });
 }
 
-// Update the number values in DOM
-function updateDOM(transaction) {
-  const balance = document.getElementById('balance');
-  const accountBalance = transaction.attributes.account.balance;
-  const income = document.getElementById('income');
-  const expense = document.getElementById('expense');
-
-  balance.innerText = `$${accountBalance}`;
-  if (accountBalance < 0) {
-    balance.classList.add('negative-balance');
-  } else {
-    balance.classList.remove('negative-balance');
-  }
-
-  income.innerText = `+$${transaction.attributes.account.total_income}`;
-  expense.innerText = `-$${transaction.attributes.account.total_expense}`;
-}
-
 // Add Transactions to DOM
 function addTransactionsToDOM(transaction) {
 
+  const list = document.getElementById('transactions-list');
   let sign = transaction.attributes.kind == "income" ? "+" : "-";
   const transactionLi = document.createElement('li');
 
@@ -78,6 +60,23 @@ function addTransactionsToDOM(transaction) {
   updateDOM(transaction);
 }
 
+// Update the number values in DOM
+function updateDOM(transaction) {
+  const balance = document.getElementById('balance');
+  const accountBalance = transaction.attributes.account.balance;
+  const income = document.getElementById('income');
+  const expense = document.getElementById('expense');
+
+  balance.innerText = `$${accountBalance}`;
+  if (accountBalance < 0) {
+    balance.classList.add('negative-balance');
+  } else {
+    balance.classList.remove('negative-balance');
+  }
+
+  income.innerText = `+$${transaction.attributes.account.total_income}`;
+  expense.innerText = `-$${transaction.attributes.account.total_expense}`;
+}
 
 
 // Event Listeners
