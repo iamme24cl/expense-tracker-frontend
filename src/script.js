@@ -14,31 +14,35 @@ function getTransactions() {
     .then(json => {
       json.data.forEach(transaction => {
         // console.log(transaction);
-        addTransactionsToDOM(transaction);
+        // addTransactionsToDOM(transaction);
+        const newTransaction = new Transaction(transaction);
+        const list = document.getElementById('transactions-list');
+        list.innerHTML += newTransaction.renderListItem();
+        updateDOM(transaction);
       });
     });
 }
 
 // Add Transactions to DOM
-function addTransactionsToDOM(transaction) {
+// function addTransactionsToDOM(transaction) {
 
-  const list = document.getElementById('transactions-list');
-  let sign = transaction.attributes.kind == "income" ? "+" : "-";
-  const transactionLi = document.createElement('li');
+//   const list = document.getElementById('transactions-list');
+//   let sign = transaction.attributes.kind == "income" ? "+" : "-";
+//   const transactionLi = document.createElement('li');
 
-  transactionLi.innerHTML = `
-  <li class="${transaction.attributes.kind}">
-    ${transaction.attributes.description} 
-    <span class="transaction-amt">${sign}${transaction.attributes.amount}</span>
-    <button class="btn btn-danger delete-btn">
-      <i class="fa fa-times" aria-hidden="true"></i>
-    </button>
-  </li>
-  `
-  list.appendChild(transactionLi);
+//   transactionLi.innerHTML = `
+//   <li class="${transaction.attributes.kind}">
+//     ${transaction.attributes.description} 
+//     <span class="transaction-amt">${sign}${transaction.attributes.amount}</span>
+//     <button class="btn btn-danger delete-btn">
+//       <i class="fa fa-times" aria-hidden="true"></i>
+//     </button>
+//   </li>
+//   `
+//   list.appendChild(transactionLi);
 
-  updateDOM(transaction);
-}
+//   updateDOM(transaction);
+// }
 
 // Update the number values in DOM
 function updateDOM(transaction) {
