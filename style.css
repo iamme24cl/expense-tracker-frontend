@@ -170,7 +170,7 @@ h4 {
   display: flex;
   justify-content: space-between;
   padding: 5px;
-  margin: 0;
+  margin: 5px 0;
   position: relative;
   width: 100%;
 }

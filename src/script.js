@@ -1,10 +1,12 @@
 const expenseApi = 'http://localhost:3000/api/v1/accounts/1/transactions';
-
+const list = document.getElementById('transactions-list');
+const listItems = document.querySelectorAll('.transaction-li');
 const toggleBtn = document.getElementById('toggle');
 const openModal = document.getElementById('open');
 const closeModal = document.getElementById('close');
 const modal = document.getElementById('modal');
 const form = document.getElementById('form');
+const editForm = document.getElementById('edit-form');
 
 
 // Fetch transactions from api
@@ -16,9 +18,10 @@ function getTransactions() {
         // console.log(transaction);
         // addTransactionsToDOM(transaction);
         const newTransaction = new Transaction(transaction);
-        const list = document.getElementById('transactions-list');
         list.innerHTML += newTransaction.renderListItem();
-        updateDOM(transaction);
+       
+
+        newTransaction.updateDOM();
       });
     });
 }
@@ -45,22 +48,22 @@ function getTransactions() {
 // }
 
 // Update the number values in DOM
-function updateDOM(transaction) {
-  const balance = document.getElementById('balance');
-  const accountBalance = transaction.attributes.account.balance;
-  const income = document.getElementById('income');
-  const expense = document.getElementById('expense');
+// function updateDOM(transaction) {
+//   const balance = document.getElementById('balance');
+//   const accountBalance = transaction.attributes.account.balance;
+//   const income = document.getElementById('income');
+//   const expense = document.getElementById('expense');
 
-  balance.innerText = `$${accountBalance}`;
-  if (accountBalance < 0) {
-    balance.classList.add('negative-balance');
-  } else {
-    balance.classList.remove('negative-balance');
-  }
+//   balance.innerText = `$${accountBalance}`;
+//   if (accountBalance < 0) {
+//     balance.classList.add('negative-balance');
+//   } else {
+//     balance.classList.remove('negative-balance');
+//   }
 
-  income.innerText = `+$${transaction.attributes.account.total_income}`;
-  expense.innerText = `-$${transaction.attributes.account.total_expense}`;
-}
+//   income.innerText = `+$${transaction.attributes.account.total_income}`;
+//   expense.innerText = `-$${transaction.attributes.account.total_expense}`;
+// }
 
 // Add New transaction
 function addNewTransaction(transaction) {
@@ -74,8 +77,10 @@ function addNewTransaction(transaction) {
   })
     .then(response => response.json())
     .then(newTransaction => {
-      addTransactionsToDOM(newTransaction.data);
-      updateDOM(newTransaction.data);
+      // addTransactionsToDOM(newTransaction.data);
+      const t = new Transaction(newTransaction.data);
+      list.innerHTML += t.renderListItem();
+      t.updateDOM();
     });
     // .then(newTransaction => console.log(newTransaction.data));
 }
@@ -85,6 +90,7 @@ function addNewTransaction(transaction) {
 // Get transactions upon DOM load
 document.addEventListener('DOMContentLoaded', () => {
   getTransactions();
+  
 });
 
 // Toggle nav
@@ -95,6 +101,7 @@ toggleBtn.addEventListener('click', () => {
 // Show Modal
 openModal.addEventListener('click', () => {
   modal.classList.add('show-modal');
+  form.id = "form";
 });
 
 // Close Modal
@@ -123,3 +130,10 @@ form.addEventListener('submit', e => {
   e.target.reset();
 });
 
+// Show modal when a transaction li is clicked;
+
+// listItems.forEach(item => {
+//   console.log(item);
+// });
+
+console.log(document.querySelectorAll('.transaction-li'));
