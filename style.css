@@ -191,7 +191,18 @@ h4 {
   padding: 0 5px;
 }
 
+.edit-btn {
+  position: absolute;
+  top: -3px;
+  left: -35px;
+  opacity: 0;
+}
+
 .transactions-list li:hover .delete-btn {
+  opacity: 1;
+}
+
+.transactions-list li:hover .edit-btn {
   opacity: 1;
 }
 

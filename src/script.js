@@ -1,6 +1,5 @@
 const expenseApi = 'http://localhost:3000/api/v1/accounts/1/transactions';
 const list = document.getElementById('transactions-list');
-const listItems = document.querySelectorAll('.transaction-li');
 const toggleBtn = document.getElementById('toggle');
 const openModal = document.getElementById('open');
 const closeModal = document.getElementById('close');
@@ -135,5 +134,3 @@ form.addEventListener('submit', e => {
 // listItems.forEach(item => {
 //   console.log(item);
 // });
-
-console.log(document.querySelectorAll('.transaction-li'));
