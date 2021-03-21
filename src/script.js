@@ -25,14 +25,16 @@ function getTransactions() {
         const deleteBtns = Array.from(document.getElementsByClassName('delete-btn'));
 
         editBtns.forEach(btn => {
-          btn.addEventListener('click', () => {
-            console.log(btn);
+          btn.addEventListener('click', (e) => {
+            console.log(btn.dataset.id);
+            // console.log(e);
           });
         });
 
         deleteBtns.forEach(btn => {
-          btn.addEventListener('click', () => {
-            console.log(btn);
+          btn.addEventListener('click', (e) => {
+            // console.log(btn.dataset.id);
+            console.log(e.target.dataset.id);
           });
         });
       });

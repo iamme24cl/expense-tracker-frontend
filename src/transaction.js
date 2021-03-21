@@ -17,8 +17,8 @@ class Transaction {
     <li class="${this.kind}">
       ${this.description} 
       <span class="transaction-amt">${sign}${this.amount}</span>
-      <button class="btn btn-danger delete-btn" data-id=${this.id}>
-        <i class="fa fa-times" aria-hidden="true"></i>
+      <button class="btn btn-danger delete-btn" >
+        <i class="fa fa-times" aria-hidden="true" data-id=${this.id}></i>
       </button>
       <button class="btn btn-primery edit-btn" data-id=${this.id}>
         <i class="fa fa-edit"></i>
