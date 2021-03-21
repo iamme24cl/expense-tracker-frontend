@@ -47,47 +47,11 @@ class Transaction {
     expense.innerText = `-$${this.totalExpense}`;
   }
 
-  // renderUpdateForm() {
-  //   form.id = "edit-form";
-  //   document.getElementById('edit-form').setAttribute('data-id', this.id);
-  //   document.getElementById('form-title').innerText = "Edit Transaction";
-  //   document.getElementById('description').value = this.description;
-  //   document.getElementById('kind').value = this.kind;
-  //   document.getElementById('amount').value = this.amount;
-  // }
-
-
-  renderUpdateForm() {
-    return `
-      <button class="close-btn" id="close">
-        <i class="fa fa-times"></i>
-      </button>
-      <div class="modal-header">
-        <h4 id="form-title">Edit Transaction</h4>
-      </div>
-        <form id="edit-form" class="modal-form" data-id="${this.id}">
-        <div class="form-group">
-          <label for="description">Description</label>
-          <input type="text" id="description" value="${this.description}" class="form-control">
-        </div>
-
-        <div class="form-group">
-          <label for="kind">Transaction Kind</label>
-          <select class="form-control" id="kind" value="${this.kind}">
-            <option>Select</option>
-            <option value="income">Income</option>
-            <option value="expense">Expense</option>           
-          </select>
-        </div>
-      
-        <div class="form-group">
-          <label for="amount">Amount</label>
-          <input type="text" id="amount" value="${this.amount}" class="form-control">
-        </div>
-
-        <input type="submit" value="Edit" class="submit-btn btn btn-primary">
-      </form>
-    `;
+  renderUpdateFormData() {
+    document.getElementById('edit-form').setAttribute('data-id', this.id);
+    document.getElementById('edit-description').value = this.description;
+    document.getElementById('edit-kind').value = this.kind;
+    document.getElementById('edit-amount').value = this.amount;
   }
 }
 

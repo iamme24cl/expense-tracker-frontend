@@ -4,6 +4,9 @@ const toggleBtn = document.getElementById('toggle');
 const openModal = document.getElementById('open');
 const closeModal = document.getElementById('close');
 const modal = document.getElementById('modal');
+const updateModal = document.getElementById('update-modal');
+const closeUpdateModal = document.getElementById('close-update-modal');
+
 const formModal = document.getElementById('form-modal');
 const formTitle = document.getElementById('form-title');
 
@@ -26,18 +29,16 @@ function getTransactions() {
 
         editBtns.forEach(btn => {
           btn.addEventListener('click', () => {
-            // console.log(+btn.dataset.id);
-            modal.classList.add('show-modal');
+            console.log(+btn.dataset.id);
+            updateModal.classList.add('show-modal');
 
             const id = +btn.dataset.id;
             const transaction = Transaction.findById(id);
-            formModal.innerHTML = transaction.renderUpdateForm();
-
-            const closeModal = document.getElementById('close');
+            transaction.renderUpdateFormData();
 
             // Close Modal
-            closeModal.addEventListener('click', () => {
-              modal.classList.remove('show-modal');
+            closeUpdateModal.addEventListener('click', () => {
+              updateModal.classList.remove('show-modal');
             });
 
             const editForm = document.getElementById('edit-form');
@@ -130,52 +131,12 @@ toggleBtn.addEventListener('click', () => {
   document.body.classList.toggle('show-nav');
 });
 
-// Show Modal and Reset the form
+// Show create form Modal 
 openModal.addEventListener('click', () => {
   modal.classList.add('show-modal');
-  // const editform = document.getElementById('edit-form');
-  // if (editForm !== null) {
-  //   editForm.id = 'form';
-  // }
-  // const form = document.getElementById('form');
-
-  // form.setAttribute('data-id', '');
-  // form.reset();
-  // document.getElementById('form-title').innerText = "Add Transaction";
-  const form = document.createElement('form');
-  form.id = 'form';
-  form.setAttribute('class', 'modal-form');
-  formTitle.innerText = "Add Transaction"
-
-  form.innerHTML = `
-      <div class="form-group">
-        <label for="description">Description</label>
-        <input type="text" id="description" placeholder="Enter description" class="form-control">
-      </div>
-
-      <div class="form-group">
-        <label for="kind">Transaction Kind</label>
-        <select class="form-control" id="kind">
-          <option>Select</option>
-          <option value="income">Income</option>
-          <option value="expense">Expense</option>           
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="amount">Amount</label>
-        <input type="text" id="amount" placeholder="Enter amount" class="form-control">
-      </div>
-
-      <input type="submit" value="Submit" class="submit-btn btn btn-primary">
-  `;
-  formModal.i
-
-
-
 });
 
-// Close Modal
+// Close  create form Modal
 closeModal.addEventListener('click', () => {
   modal.classList.remove('show-modal');
 });
@@ -183,6 +144,11 @@ closeModal.addEventListener('click', () => {
 // Close Modal on outside click
 window.addEventListener('click', e => {
   e.target == modal ? modal.classList.remove('show-modal') : false;
+  if (e.target == modal) {
+    modal.classList.remove('show-modal');
+  } else if (e.target == updateModal) {
+    updateModal.classList.remove('show-modal');
+  } 
 });
 
 // 
