@@ -21,6 +21,20 @@ function getTransactions() {
        
 
         newTransaction.updateDOM();
+        const editBtns = Array.from(document.getElementsByClassName('edit-btn'));
+        const deleteBtns = Array.from(document.getElementsByClassName('delete-btn'));
+
+        editBtns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            console.log(btn);
+          });
+        });
+
+        deleteBtns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            console.log(btn);
+          });
+        });
       });
     });
 }
