@@ -4,8 +4,8 @@ const toggleBtn = document.getElementById('toggle');
 const openModal = document.getElementById('open');
 const closeModal = document.getElementById('close');
 const modal = document.getElementById('modal');
-const form = document.getElementById('form');
-const editForm = document.getElementById('edit-form');
+const formModal = document.getElementById('form-modal');
+const formTitle = document.getElementById('form-title');
 
 
 // Fetch transactions from api
@@ -25,9 +25,26 @@ function getTransactions() {
         const deleteBtns = Array.from(document.getElementsByClassName('delete-btn'));
 
         editBtns.forEach(btn => {
-          btn.addEventListener('click', (e) => {
-            console.log(btn.dataset.id);
-            // console.log(e);
+          btn.addEventListener('click', () => {
+            // console.log(+btn.dataset.id);
+            modal.classList.add('show-modal');
+
+            const id = +btn.dataset.id;
+            const transaction = Transaction.findById(id);
+            formModal.innerHTML = transaction.renderUpdateForm();
+
+            const closeModal = document.getElementById('close');
+
+            // Close Modal
+            closeModal.addEventListener('click', () => {
+              modal.classList.remove('show-modal');
+            });
+
+            const editForm = document.getElementById('edit-form');
+            editForm.addEventListener('submit', event => {
+              event.preventDefault();
+              console.log("submitted")
+            });
           });
         });
 
@@ -113,10 +130,49 @@ toggleBtn.addEventListener('click', () => {
   document.body.classList.toggle('show-nav');
 });
 
-// Show Modal
+// Show Modal and Reset the form
 openModal.addEventListener('click', () => {
   modal.classList.add('show-modal');
-  form.id = "form";
+  // const editform = document.getElementById('edit-form');
+  // if (editForm !== null) {
+  //   editForm.id = 'form';
+  // }
+  // const form = document.getElementById('form');
+
+  // form.setAttribute('data-id', '');
+  // form.reset();
+  // document.getElementById('form-title').innerText = "Add Transaction";
+  const form = document.createElement('form');
+  form.id = 'form';
+  form.setAttribute('class', 'modal-form');
+  formTitle.innerText = "Add Transaction"
+
+  form.innerHTML = `
+      <div class="form-group">
+        <label for="description">Description</label>
+        <input type="text" id="description" placeholder="Enter description" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="kind">Transaction Kind</label>
+        <select class="form-control" id="kind">
+          <option>Select</option>
+          <option value="income">Income</option>
+          <option value="expense">Expense</option>           
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="amount">Amount</label>
+        <input type="text" id="amount" placeholder="Enter amount" class="form-control">
+      </div>
+
+      <input type="submit" value="Submit" class="submit-btn btn btn-primary">
+  `;
+  formModal.i
+
+
+
 });
 
 // Close Modal
@@ -130,8 +186,8 @@ window.addEventListener('click', e => {
 });
 
 // 
-form.addEventListener('submit', e => {
-  e.preventDefault();
+form.addEventListener('submit', event => {
+  event.preventDefault();
   const description = document.getElementById('description').value;
   const kind = document.getElementById('kind').value;
   const amount = +document.getElementById('amount').value;
@@ -142,11 +198,6 @@ form.addEventListener('submit', e => {
   };
   addNewTransaction(transaction);
   modal.classList.remove('show-modal');
-  e.target.reset();
+  event.target.reset();
 });
 
-// Show modal when a transaction li is clicked;
-
-// listItems.forEach(item => {
-//   console.log(item);
-// });
