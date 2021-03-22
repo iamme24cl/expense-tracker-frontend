@@ -6,9 +6,8 @@ const closeModal = document.getElementById('close');
 const modal = document.getElementById('modal');
 const updateModal = document.getElementById('update-modal');
 const closeUpdateModal = document.getElementById('close-update-modal');
+const createForm = document.getElementById('form');
 
-const formModal = document.getElementById('form-modal');
-const formTitle = document.getElementById('form-title');
 
 
 // Fetch transactions from api
@@ -45,6 +44,17 @@ function getTransactions() {
             editForm.addEventListener('submit', event => {
               event.preventDefault();
               console.log("submitted")
+              const description = document.getElementById('edit-description').value;
+              const kind = document.getElementById('edit-kind').value;
+              const amount = +document.getElementById('edit-amount').value;
+              const updatedTransaction = {
+                description: description,
+                amount: amount,
+                kind: kind
+              };
+              updateTransaction(updatedTransaction);
+              updateModal.classList.remove('show-modal');
+              event.target.reset();
             });
           });
         });
@@ -114,8 +124,31 @@ function addNewTransaction(transaction) {
       const t = new Transaction(newTransaction.data);
       list.innerHTML += t.renderListItem();
       t.updateDOM();
+
+      getTransactions();
     });
     // .then(newTransaction => console.log(newTransaction.data));
+}
+
+// Update Transaction
+function updateTransaction(transaction) {
+  fetch(expenseApi, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify(transaction)
+  })
+    .then(response => response.json())
+    .then(newTransaction => {
+      // addTransactionsToDOM(newTransaction.data);
+      // const t = new Transaction(newTransaction.data);
+      // list.innerHTML += t.renderListItem();
+      // t.updateDOM();
+      console.log(newTransaction.data);
+      getTransactions();
+    });
 }
 
 
@@ -152,7 +185,7 @@ window.addEventListener('click', e => {
 });
 
 // 
-form.addEventListener('submit', event => {
+createForm.addEventListener('submit', event => {
   event.preventDefault();
   const description = document.getElementById('description').value;
   const kind = document.getElementById('kind').value;
@@ -166,4 +199,7 @@ form.addEventListener('submit', event => {
   modal.classList.remove('show-modal');
   event.target.reset();
 });
+
+
+
 
