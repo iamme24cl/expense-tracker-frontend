@@ -22,7 +22,9 @@ function getTransactions() {
         list.innerHTML += newTransaction.renderListItem();
        
 
-        newTransaction.updateDOM();
+        updateDOM(transaction);
+
+        //Refactor from down here
         const editBtns = Array.from(document.getElementsByClassName('edit-btn'));
         const deleteBtns = Array.from(document.getElementsByClassName('delete-btn'));
 
@@ -43,11 +45,13 @@ function getTransactions() {
             const editForm = document.getElementById('edit-form');
             editForm.addEventListener('submit', event => {
               event.preventDefault();
-              console.log("submitted")
+              console.log("submitted");
+              const transactionId = +event.target.dataset.id;
               const description = document.getElementById('edit-description').value;
               const kind = document.getElementById('edit-kind').value;
               const amount = +document.getElementById('edit-amount').value;
               const updatedTransaction = {
+                id: transactionId,
                 description: description,
                 amount: amount,
                 kind: kind
@@ -69,44 +73,25 @@ function getTransactions() {
     });
 }
 
-// Add Transactions to DOM
-// function addTransactionsToDOM(transaction) {
+// Update the DOM with number values
+function updateDOM(transaction) {
+  const balance = document.getElementById('balance');
+  const income = document.getElementById('income');
+  const expense = document.getElementById('expense');
+  const accountBalance = transaction.attributes.account.balance;
 
-//   const list = document.getElementById('transactions-list');
-//   let sign = transaction.attributes.kind == "income" ? "+" : "-";
-//   const transactionLi = document.createElement('li');
+  balance.innerText = `$${accountBalance}`;
+  if (accountBalance < 0) {
+    balance.classList.add('negative-balance');
+  } else {
+    balance.classList.remove('negative-balance');
+  }
 
-//   transactionLi.innerHTML = `
-//   <li class="${transaction.attributes.kind}">
-//     ${transaction.attributes.description} 
-//     <span class="transaction-amt">${sign}${transaction.attributes.amount}</span>
-//     <button class="btn btn-danger delete-btn">
-//       <i class="fa fa-times" aria-hidden="true"></i>
-//     </button>
-//   </li>
-//   `
-//   list.appendChild(transactionLi);
+  income.innerText = `+$${transaction.attributes.account.total_income}`;
+  expense.innerText = `-$${transaction.attributes.account.total_expense}`;
+}
 
-//   updateDOM(transaction);
-// }
 
-// Update the number values in DOM
-// function updateDOM(transaction) {
-//   const balance = document.getElementById('balance');
-//   const accountBalance = transaction.attributes.account.balance;
-//   const income = document.getElementById('income');
-//   const expense = document.getElementById('expense');
-
-//   balance.innerText = `$${accountBalance}`;
-//   if (accountBalance < 0) {
-//     balance.classList.add('negative-balance');
-//   } else {
-//     balance.classList.remove('negative-balance');
-//   }
-
-//   income.innerText = `+$${transaction.attributes.account.total_income}`;
-//   expense.innerText = `-$${transaction.attributes.account.total_expense}`;
-// }
 
 // Add New transaction
 function addNewTransaction(transaction) {
@@ -123,16 +108,15 @@ function addNewTransaction(transaction) {
       // addTransactionsToDOM(newTransaction.data);
       const t = new Transaction(newTransaction.data);
       list.innerHTML += t.renderListItem();
-      t.updateDOM();
+      updateDOM(newTransaction.data);
 
-      getTransactions();
     });
     // .then(newTransaction => console.log(newTransaction.data));
 }
 
 // Update Transaction
 function updateTransaction(transaction) {
-  fetch(expenseApi, {
+  fetch(`${expenseApi}/${transaction.id}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
@@ -141,13 +125,17 @@ function updateTransaction(transaction) {
     body: JSON.stringify(transaction)
   })
     .then(response => response.json())
-    .then(newTransaction => {
+    .then(updatedData => {
       // addTransactionsToDOM(newTransaction.data);
       // const t = new Transaction(newTransaction.data);
       // list.innerHTML += t.renderListItem();
       // t.updateDOM();
-      console.log(newTransaction.data);
+      console.log(updatedData.data);
+      while (list.hasChildNodes()) {
+        list.removeChild(list.firstChild);
+      }
       getTransactions();
+      // updateDOM(updatedData.data);
     });
 }
 
@@ -158,6 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
   getTransactions();
   
 });
+
 
 // Toggle nav
 toggleBtn.addEventListener('click', () => {
@@ -198,6 +187,10 @@ createForm.addEventListener('submit', event => {
   addNewTransaction(transaction);
   modal.classList.remove('show-modal');
   event.target.reset();
+});
+
+list.addEventListener('click', e => {
+  console.log(e.target.dataset);
 });
 
 

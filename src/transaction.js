@@ -18,34 +18,34 @@ class Transaction {
     let sign = this.kind == "income" ? "+" : "-";
 
     return `
-      <li class="${this.kind}">
+      <li class="${this.kind}" data-id=${this.id}>
         ${this.description} 
         <span class="transaction-amt">${sign}${this.amount}</span>
+        <button class="btn btn-primery edit-btn" data-id=${this.id}>
+        <i class="fa fa-edit"></i>
+        </button>
         <button class="btn btn-danger delete-btn" >
           <i class="fa fa-times" aria-hidden="true" data-id=${this.id}></i>
-        </button>
-        <button class="btn btn-primery edit-btn" data-id=${this.id}>
-          <i class="fa fa-edit"></i>
         </button>
       </li>
     `;
   }
 
-  updateDOM() {
-    const balance = document.getElementById('balance');
-    const income = document.getElementById('income');
-    const expense = document.getElementById('expense');
+  // updateDOM() {
+  //   const balance = document.getElementById('balance');
+  //   const income = document.getElementById('income');
+  //   const expense = document.getElementById('expense');
   
-    balance.innerText = `$${this.accountBalance}`;
-    if (this.accountBalance < 0) {
-      balance.classList.add('negative-balance');
-    } else {
-      balance.classList.remove('negative-balance');
-    }
+  //   balance.innerText = `$${this.accountBalance}`;
+  //   if (this.accountBalance < 0) {
+  //     balance.classList.add('negative-balance');
+  //   } else {
+  //     balance.classList.remove('negative-balance');
+  //   }
   
-    income.innerText = `+$${this.totalIncome}`;
-    expense.innerText = `-$${this.totalExpense}`;
-  }
+  //   income.innerText = `+$${this.totalIncome}`;
+  //   expense.innerText = `-$${this.totalExpense}`;
+  // }
 
   renderUpdateFormData() {
     document.getElementById('edit-form').setAttribute('data-id', this.id);
