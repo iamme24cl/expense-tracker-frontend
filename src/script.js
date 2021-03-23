@@ -19,62 +19,37 @@ function getTransactions() {
         // console.log(transaction);
         // addTransactionsToDOM(transaction);
         const newTransaction = new Transaction(transaction);
-        list.innerHTML += newTransaction.renderListItem();
+        const li = newTransaction.renderListItem();
+        list.innerHTML += li;
        
 
         updateDOM(transaction);
 
-        //Refactor from down here
-        const editBtns = Array.from(document.getElementsByClassName('edit-btn'));
-        const deleteBtns = Array.from(document.getElementsByClassName('delete-btn'));
-
-        editBtns.forEach(btn => {
-          btn.addEventListener('click', () => {
-            console.log(+btn.dataset.id);
-            updateModal.classList.add('show-modal');
-
-            const id = +btn.dataset.id;
-            const transaction = Transaction.findById(id);
-            transaction.renderUpdateFormData();
-
-            // Close Modal
-            closeUpdateModal.addEventListener('click', () => {
-              updateModal.classList.remove('show-modal');
-            });
-
-            const editForm = document.getElementById('edit-form');
-            editForm.addEventListener('submit', event => {
-              event.preventDefault();
-              console.log("submitted");
-              const transactionId = +event.target.dataset.id;
-              const description = document.getElementById('edit-description').value;
-              const kind = document.getElementById('edit-kind').value;
-              const amount = +document.getElementById('edit-amount').value;
-              const updatedTransaction = {
-                id: transactionId,
-                description: description,
-                amount: amount,
-                kind: kind
-              };
-              updateTransaction(updatedTransaction);
-              updateModal.classList.remove('show-modal');
-              event.target.reset();
-            });
+        
+        const editBtns = Array.from(document.getElementsByClassName('edit-btn')); 
+        editBtns.forEach (btn => {
+          btn.addEventListener('click', e => {
+            const id = +e.target.dataset.id;
+            console.log(id);
+            renderUpdateForm(id);
+            
           });
         });
+        const deleteBtns = Array.from(document.getElementsByClassName('delete-btn')); 
 
         deleteBtns.forEach(btn => {
           btn.addEventListener('click', (e) => {
             // console.log(btn.dataset.id);
-            console.log(e.target.dataset.id);
+            console.log(+e.target.dataset.id);
           });
         });
+
       });
     });
 }
 
 // Update the DOM with number values
-function updateDOM(transaction) {
+function updateDOM(transaction, li) {
   const balance = document.getElementById('balance');
   const income = document.getElementById('income');
   const expense = document.getElementById('expense');
@@ -126,16 +101,16 @@ function updateTransaction(transaction) {
   })
     .then(response => response.json())
     .then(updatedData => {
-      // addTransactionsToDOM(newTransaction.data);
-      // const t = new Transaction(newTransaction.data);
-      // list.innerHTML += t.renderListItem();
-      // t.updateDOM();
       console.log(updatedData.data);
-      while (list.hasChildNodes()) {
-        list.removeChild(list.firstChild);
+      const data = {
+        description: updatedData.data.attributes.description,
+        kind: updatedData.data.attributes.kind,
+        amount: updatedData.data.attributes.amount
       }
-      getTransactions();
-      // updateDOM(updatedData.data);
+      const updatedTransaction = Transaction.findById(+updatedData.data.id);
+      Object.assign(updatedTransaction, data);
+      init();
+      updateDOM(updatedData.data);
     });
 }
 
@@ -163,6 +138,12 @@ closeModal.addEventListener('click', () => {
   modal.classList.remove('show-modal');
 });
 
+// Close Update Form Modal
+closeUpdateModal.addEventListener('click', () => {
+  updateModal.classList.remove('show-modal');
+});
+
+
 // Close Modal on outside click
 window.addEventListener('click', e => {
   e.target == modal ? modal.classList.remove('show-modal') : false;
@@ -189,9 +170,61 @@ createForm.addEventListener('submit', event => {
   event.target.reset();
 });
 
-list.addEventListener('click', e => {
-  console.log(e.target.dataset);
-});
+function renderUpdateForm(id) {
+  updateModal.classList.add('show-modal');
+
+  const transaction_id = id;
+  const transaction = Transaction.findById(transaction_id);
+  transaction.renderUpdateFormData();
+
+
+  const editForm = document.getElementById('edit-form');
+  editForm.addEventListener('submit', event => {
+    event.preventDefault();
+    console.log("submitted");
+    const transactionId = +event.target.dataset.id;
+    const description = document.getElementById('edit-description').value;
+    const kind = document.getElementById('edit-kind').value;
+    const amount = +document.getElementById('edit-amount').value;
+    const updatedTransaction = {
+      id: transactionId,
+      description: description,
+      amount: amount,
+      kind: kind
+    };
+    updateTransaction(updatedTransaction);
+    updateModal.classList.remove('show-modal');
+  });
+};
+
+
+function init() {
+  list.innerHTML = '';
+
+  Transaction.all.forEach(t => {
+    list.innerHTML += t.renderListItem()
+  });
+
+  const editBtns = Array.from(document.getElementsByClassName('edit-btn')); 
+  
+  editBtns.forEach (btn => {
+    btn.addEventListener('click', e => {
+      const id = +e.target.dataset.id;
+      console.log(id);
+      renderUpdateForm(id);
+      
+    });
+  });
+
+  const deleteBtns = Array.from(document.getElementsByClassName('delete-btn')); 
+
+  deleteBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      // console.log(btn.dataset.id);
+      console.log(+e.target.dataset.id);
+    });
+  });
+}
 
 
 

@@ -18,11 +18,11 @@ class Transaction {
     let sign = this.kind == "income" ? "+" : "-";
 
     return `
-      <li class="${this.kind}" data-id=${this.id}>
+      <li class="${this.kind} transaction-li">
         ${this.description} 
         <span class="transaction-amt">${sign}${this.amount}</span>
         <button class="btn btn-primery edit-btn" data-id=${this.id}>
-        <i class="fa fa-edit"></i>
+          <i class="fa fa-edit" data-id=${this.id}></i>
         </button>
         <button class="btn btn-danger delete-btn" >
           <i class="fa fa-times" aria-hidden="true" data-id=${this.id}></i>
