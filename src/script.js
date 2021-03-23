@@ -17,12 +17,14 @@ function getTransactions() {
     .then(json => {
       json.data.forEach(transaction => {
         // console.log(transaction);
-        const newTransaction = new Transaction(transaction);
-       
-        init(newTransaction);
+        new Transaction(transaction);
+        
       });
+      init();
     });
-}
+    
+  
+  }
 
 // Update the DOM with number values
 function updateDOMValues(transaction) {
@@ -53,12 +55,14 @@ function addNewTransaction(transaction) {
   })
     .then(response => response.json())
     .then(newData => {
-      const newTransaction = new Transaction(newData.data);
+      new Transaction(newData.data);
 
       // list.innerHTML += t.renderListItem();
       // updateDOM(newData.data);
-      init(newTransaction);
+      init();
     });
+  
+  
 }
 
 // Update Transaction
@@ -91,7 +95,29 @@ function updateTransaction(transaction) {
       const updatedTransaction = Transaction.findById(+updatedData.data.id);
       Object.assign(updatedTransaction, data);
 
-      init(updatedTransaction);
+      init();
+    });
+  
+  
+}
+
+// Delete Transaction
+function deleteTransaction(transactionId) {
+  fetch(`${expenseApi}/${transactionId}`, {
+    method: 'DELETE',
+    headers: {
+      "Content-Type": "application/js",
+      "Accept": "application/js"
+    },
+    body: null
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      alert(data.message);
+
+      Transaction.all = Transaction.all.filter(transaction => transaction.id !== transactionId);
+      init();
     });
 }
 
@@ -124,13 +150,13 @@ function renderUpdateForm(id) {
 };
 
 // Reset Transactions list and render content and values
-function init(transaction) {
+function init() {
   list.innerHTML = '';
 
   Transaction.all.forEach(t => {
-    list.innerHTML += t.renderListItem()
+    list.innerHTML += t.renderListItem();
+    updateDOMValues(t);
   });
-  updateDOMValues(transaction);
   attatchBtnEventListeners();
   
 }
@@ -153,9 +179,13 @@ function attatchBtnEventListeners() {
   const deleteBtns = Array.from(document.getElementsByClassName('delete-btn')); 
 
   deleteBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
+    btn.addEventListener('click', e => {
       // console.log(btn.dataset.id);
-      console.log(+e.target.dataset.id);
+      // console.log(+e.target.dataset.id);
+      const id = +e.target.dataset.id;
+      const transaction = Transaction.findById(id);
+      // console.log(transaction);
+      deleteTransaction(id);
     });
   });
 }
