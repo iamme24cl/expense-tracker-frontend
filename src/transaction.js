@@ -31,23 +31,7 @@ class Transaction {
     `;
   }
 
-  // updateDOM() {
-  //   const balance = document.getElementById('balance');
-  //   const income = document.getElementById('income');
-  //   const expense = document.getElementById('expense');
-  
-  //   balance.innerText = `$${this.accountBalance}`;
-  //   if (this.accountBalance < 0) {
-  //     balance.classList.add('negative-balance');
-  //   } else {
-  //     balance.classList.remove('negative-balance');
-  //   }
-  
-  //   income.innerText = `+$${this.totalIncome}`;
-  //   expense.innerText = `-$${this.totalExpense}`;
-  // }
-
-  renderUpdateFormData() {
+  insertUpdateFormData() {
     document.getElementById('edit-form').setAttribute('data-id', this.id);
     document.getElementById('edit-description').value = this.description;
     document.getElementById('edit-kind').value = this.kind;
