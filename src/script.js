@@ -63,13 +63,19 @@ function addNewTransaction(transaction) {
 
 // Update Transaction
 function updateTransaction(transaction) {
+  const body = {
+    description: transaction.description,
+    kind: transaction.kind,
+    amount: transaction.amount
+  };
+  
   fetch(`${expenseApi}/${transaction.id}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json'
     },
-    body: JSON.stringify(transaction)
+    body: JSON.stringify(body)
   })
     .then(response => response.json())
     .then(updatedData => {
