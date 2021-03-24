@@ -1,13 +1,5 @@
 const baseUrl = 'http://localhost:3000';
 const expenseApi = `${baseUrl}/api/v1/accounts/1/transactions`;
-const list = document.getElementById('transactions-list');
-const toggleBtn = document.getElementById('toggle');
-const modal = document.getElementById('modal');
-const openModal = document.getElementById('open');
-const closeModal = document.getElementById('close');
-const updateModal = document.getElementById('update-modal');
-const closeUpdateModal = document.getElementById('close-update-modal');
-const createForm = document.getElementById('form');
 
 
 // Fetch all existing transactions from Backend
@@ -57,8 +49,8 @@ function addNewTransaction(transaction) {
 
       // list.innerHTML += t.renderListItem();
       // updateDOM(newData.data);
+      init();   
     });
-    init();   
 }
 
 // Update Transaction
@@ -94,12 +86,11 @@ function updateTransaction(transaction) {
       init();
     });
   
-  
 }
 
 // Delete Transaction
 function deleteTransaction(transactionId) {
-  // Transaction.all = Transaction.all.filter(transaction => transaction.id !== transactionId);
+  
 
   fetch(`${expenseApi}/${transactionId}`, {
     method: 'DELETE',
@@ -116,13 +107,17 @@ function deleteTransaction(transactionId) {
 
       Transaction.all = [];
       getTransactions();
+
+      // Transaction.all = Transaction.all.filter(transaction => transaction.id !== transactionId);
+
+      // init();
     });
 }
 
 // Show Update Form Modal, insert existing data, attach event listener to the 
 // form, and render it
 function renderUpdateForm(id) {
-  updateModal.classList.add('show-modal');
+  document.getElementById('update-modal').classList.add('show-modal');
 
   const transaction_id = id;
   const transaction = Transaction.findById(transaction_id);
@@ -143,18 +138,24 @@ function renderUpdateForm(id) {
       kind: kind
     };
     updateTransaction(transaction);
-    updateModal.classList.remove('show-modal');
+    document.getElementById('update-modal').classList.remove('show-modal');
   });
 };
 
 // Reset Transactions list and render content and values
 function init() {
+  const list = document.getElementById('transactions-list');
   list.innerHTML = '';
 
   Transaction.all.forEach(t => {
     list.innerHTML += t.renderListItem();
     updateDOMValues(t);
   });
+  if (Transaction.all.length === 0) {
+    document.getElementById('balance').innerText = `$${0}`;
+    document.getElementById('income').innerText = `-$${0}`;
+    document.getElementById('expense').innerText = `+$${0}`;
+  }
   attatchBtnEventListeners();  
 }
 
@@ -180,7 +181,7 @@ function attatchBtnEventListeners() {
       // console.log(btn.dataset.id);
       // console.log(+e.target.dataset.id);
       const id = +e.target.dataset.id;
-      const transaction = Transaction.findById(id);
+      // const transaction = Transaction.findById(id);
       // console.log(transaction);
       deleteTransaction(id);
     });
@@ -189,6 +190,14 @@ function attatchBtnEventListeners() {
 
 // Get all Transactions & Attach Event Listeners upon DOM Load
 document.addEventListener('DOMContentLoaded', () => {
+  const toggleBtn = document.getElementById('toggle');
+  const modal = document.getElementById('modal');
+  const openModal = document.getElementById('open');
+  const closeModal = document.getElementById('close');
+  const updateModal = document.getElementById('update-modal');
+  const closeUpdateModal = document.getElementById('close-update-modal');
+  const createForm = document.getElementById('form');
+  
   getTransactions();
 
   // Toggle nav
@@ -206,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
     modal.classList.remove('show-modal');
   });
 
-  // Close Update Form Modal
+  // Close Update form Modal
   closeUpdateModal.addEventListener('click', () => {
     updateModal.classList.remove('show-modal');
   });
