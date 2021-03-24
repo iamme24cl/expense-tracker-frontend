@@ -10,7 +10,7 @@ const closeUpdateModal = document.getElementById('close-update-modal');
 const createForm = document.getElementById('form');
 
 
-// Fetch all the transactions from Backend
+// Fetch all existing transactions from Backend
 function getTransactions() {
   fetch(expenseApi)
     .then(response => response.json())
@@ -22,9 +22,7 @@ function getTransactions() {
       });
       init();
     });
-    
-  
-  }
+}
 
 // Update the DOM with number values
 function updateDOMValues(transaction) {
@@ -59,10 +57,8 @@ function addNewTransaction(transaction) {
 
       // list.innerHTML += t.renderListItem();
       // updateDOM(newData.data);
-      init();
     });
-  
-  
+    init();   
 }
 
 // Update Transaction
@@ -103,6 +99,8 @@ function updateTransaction(transaction) {
 
 // Delete Transaction
 function deleteTransaction(transactionId) {
+  // Transaction.all = Transaction.all.filter(transaction => transaction.id !== transactionId);
+
   fetch(`${expenseApi}/${transactionId}`, {
     method: 'DELETE',
     headers: {
@@ -116,8 +114,8 @@ function deleteTransaction(transactionId) {
       console.log(data);
       alert(data.message);
 
-      Transaction.all = Transaction.all.filter(transaction => transaction.id !== transactionId);
-      init();
+      Transaction.all = [];
+      getTransactions();
     });
 }
 
@@ -157,8 +155,7 @@ function init() {
     list.innerHTML += t.renderListItem();
     updateDOMValues(t);
   });
-  attatchBtnEventListeners();
-  
+  attatchBtnEventListeners();  
 }
 
 // Attach Event Listeners ------------------------------------------------------
@@ -242,11 +239,3 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   
 });
-
-
-
-
-
-
-
-
