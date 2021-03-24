@@ -1,9 +1,5 @@
 class App {
   attachEventListeners() {
-    document.getElementById('transactions-list').addEventListener('click', e => {
-      console.log('clicked');
-    });
-
     const toggleBtn = document.getElementById('toggle');
     const modal = document.getElementById('modal');
     const openModal = document.getElementById('open');
@@ -11,8 +7,9 @@ class App {
     const updateModal = document.getElementById('update-modal');
     const closeUpdateModal = document.getElementById('close-update-modal');
     const createForm = document.getElementById('form');
+    const editForm = document.getElementById('edit-form');
 
-      // Toggle nav
+    // Toggle nav
     toggleBtn.addEventListener('click', () => {
       document.body.classList.toggle('show-nav');
     });
@@ -57,6 +54,23 @@ class App {
       addNewTransaction(transaction);
       modal.classList.remove('show-modal');
       event.target.reset();
+    });
+
+    editForm.addEventListener('submit', event => {
+      event.preventDefault();
+      console.log("submitted");
+      const transactionId = +event.target.dataset.id;
+      const description = document.getElementById('edit-description').value;
+      const kind = document.getElementById('edit-kind').value;
+      const amount = +document.getElementById('edit-amount').value;
+      const transaction = {
+        id: transactionId,
+        description: description,
+        amount: amount,
+        kind: kind
+      };
+      updateTransaction(transaction);
+      document.getElementById('update-modal').classList.remove('show-modal');
     });
   }
 
