@@ -1,6 +1,6 @@
 const baseUrl = 'http://localhost:3000';
 const expenseApi = `${baseUrl}/api/v1/accounts/1/transactions`;
-
+const app = new App();
 
 // Fetch all existing transactions from Backend
 function getTransactions() {
@@ -47,8 +47,6 @@ function addNewTransaction(transaction) {
     .then(newData => {
       new Transaction(newData.data);
 
-      // list.innerHTML += t.renderListItem();
-      // updateDOM(newData.data);
       init();   
     });
 }
@@ -90,8 +88,6 @@ function updateTransaction(transaction) {
 
 // Delete Transaction
 function deleteTransaction(transactionId) {
-  
-
   fetch(`${expenseApi}/${transactionId}`, {
     method: 'DELETE',
     headers: {
@@ -109,14 +105,13 @@ function deleteTransaction(transactionId) {
       getTransactions();
 
       // Transaction.all = Transaction.all.filter(transaction => transaction.id !== transactionId);
-
       // init();
     });
 }
 
 // Show Update Form Modal, insert existing data, attach event listener to the 
-// form, and render it
-function renderUpdateForm(id) {
+// update form, and render it
+function showUpdateForm(id) {
   document.getElementById('update-modal').classList.add('show-modal');
 
   const transaction_id = id;
@@ -124,6 +119,7 @@ function renderUpdateForm(id) {
   transaction.insertUpdateFormData();
 
   const editForm = document.getElementById('edit-form');
+
   editForm.addEventListener('submit', event => {
     event.preventDefault();
     console.log("submitted");
@@ -156,95 +152,14 @@ function init() {
     document.getElementById('income').innerText = `-$${0}`;
     document.getElementById('expense').innerText = `+$${0}`;
   }
-  attatchBtnEventListeners();  
+  app.attatchBtnEventListeners();  
 }
 
-// Attach Event Listeners ------------------------------------------------------
-
-// Attach listeners to all `edit` & `delete` btns that are generated dynamically
-function attatchBtnEventListeners() {
-  const editBtns = Array.from(document.getElementsByClassName('edit-btn')); 
-  
-  editBtns.forEach (btn => {
-    btn.addEventListener('click', e => {
-      const id = +e.target.dataset.id;
-      console.log(id);
-      renderUpdateForm(id);
-      
-    });
-  });
-
-  const deleteBtns = Array.from(document.getElementsByClassName('delete-btn')); 
-
-  deleteBtns.forEach(btn => {
-    btn.addEventListener('click', e => {
-      // console.log(btn.dataset.id);
-      // console.log(+e.target.dataset.id);
-      const id = +e.target.dataset.id;
-      // const transaction = Transaction.findById(id);
-      // console.log(transaction);
-      deleteTransaction(id);
-    });
-  });
-}
 
 // Get all Transactions & Attach Event Listeners upon DOM Load
 document.addEventListener('DOMContentLoaded', () => {
-  const toggleBtn = document.getElementById('toggle');
-  const modal = document.getElementById('modal');
-  const openModal = document.getElementById('open');
-  const closeModal = document.getElementById('close');
-  const updateModal = document.getElementById('update-modal');
-  const closeUpdateModal = document.getElementById('close-update-modal');
-  const createForm = document.getElementById('form');
   
-  getTransactions();
-
-  // Toggle nav
-  toggleBtn.addEventListener('click', () => {
-    document.body.classList.toggle('show-nav');
-  });
-
-  // Show Create form Modal 
-  openModal.addEventListener('click', () => {
-    modal.classList.add('show-modal');
-  });
-
-  // Close  Create form Modal
-  closeModal.addEventListener('click', () => {
-    modal.classList.remove('show-modal');
-  });
-
-  // Close Update form Modal
-  closeUpdateModal.addEventListener('click', () => {
-    updateModal.classList.remove('show-modal');
-  });
-
-
-  // Close Modal on outside click
-  window.addEventListener('click', e => {
-    e.target == modal ? modal.classList.remove('show-modal') : false;
-    if (e.target == modal) {
-      modal.classList.remove('show-modal');
-    } else if (e.target == updateModal) {
-      updateModal.classList.remove('show-modal');
-    } 
-  });
-
-  // Listen to submit event on form for new transaction
-  createForm.addEventListener('submit', event => {
-    event.preventDefault();
-    const description = document.getElementById('description').value;
-    const kind = document.getElementById('kind').value;
-    const amount = +document.getElementById('amount').value;
-    const transaction = {
-      description: description,
-      amount: amount,
-      kind: kind
-    };
-    addNewTransaction(transaction);
-    modal.classList.remove('show-modal');
-    event.target.reset();
-  });
+  getTransactions();  
   
+  app.attachEventListeners();
 });
