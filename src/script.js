@@ -2,19 +2,6 @@ const baseUrl = 'http://localhost:3000/api/v1';
 const expenseApi = `${baseUrl}/accounts/1/transactions`;
 const app = new App();
 
-// Fetch all existing transactions from Backend
-function getTransactions() {
-  fetch(expenseApi)
-    .then(response => response.json())
-    .then(json => {
-      json.data.forEach(transaction => {
-        // console.log(transaction);
-        new Transaction(transaction);
-        
-      });
-      init();
-    });
-}
 
 // Update the DOM with number values
 function updateDOMValues(transaction) {
@@ -33,22 +20,22 @@ function updateDOMValues(transaction) {
   expense.innerText = `-$${transaction.totalExpense}`;
 }
 
+//
+function createTransactions() {
+  app.adapter.fetchTransactions().then(transactions => {
+    transactions.data.forEach(transaction => {
+      console.log(transaction);
+      new Transaction(transaction);      
+    });
+    init();
+  }); 
+}
+
 // Add New transaction
 function addNewTransaction(transaction) {
-  fetch(expenseApi, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    },
-    body: JSON.stringify(transaction)
-  })
-    .then(response => response.json())
-    .then(newData => {
-      new Transaction(newData.data);
+  new Transaction(transaction);
 
-      init();   
-    });
+  init(); 
 }
 
 // Update Transaction
@@ -102,7 +89,7 @@ function deleteTransaction(transactionId) {
       alert(data.message);
 
       Transaction.all = [];
-      getTransactions();
+      createTransactions();
 
       // Transaction.all = Transaction.all.filter(transaction => transaction.id !== transactionId);
       // init();
@@ -134,7 +121,8 @@ function createFormHandler(event) {
     kind: kind
   };
   
-  addNewTransaction(transaction);
+  app.adapter.createTransaction(transaction).then(newTransaction => addNewTransaction(newTransaction.data));
+  // addNewTransaction(transaction);
   modal.classList.remove('show-modal');
   event.target.reset();
 }
@@ -170,8 +158,8 @@ function init() {
   });
   if (Transaction.all.length === 0) {
     document.getElementById('balance').innerText = `$${0}`;
-    document.getElementById('income').innerText = `-$${0}`;
-    document.getElementById('expense').innerText = `+$${0}`;
+    document.getElementById('income').innerText = `$${0}`;
+    document.getElementById('expense').innerText = `$${0}`;
   }
   app.attatchBtnEventListeners();  
 }
@@ -179,8 +167,7 @@ function init() {
 
 // Get all Transactions & Attach Event Listeners upon DOM Load
 document.addEventListener('DOMContentLoaded', () => {
-  
-  getTransactions();  
-  
   app.attachEventListeners();
+
+  createTransactions();
 });

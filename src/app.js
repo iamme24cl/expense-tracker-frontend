@@ -1,4 +1,8 @@
 class App {
+  constructor() {
+    this.adapter = new Adapter();
+  }
+
   attachEventListeners() {
     const toggleBtn = document.getElementById('toggle');
     const modal = document.getElementById('modal');
