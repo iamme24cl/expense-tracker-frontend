@@ -1,5 +1,5 @@
-const baseUrl = 'http://localhost:3000';
-const expenseApi = `${baseUrl}/api/v1/accounts/1/transactions`;
+const baseUrl = 'http://localhost:3000/api/v1';
+const expenseApi = `${baseUrl}/accounts/1/transactions`;
 const app = new App();
 
 // Fetch all existing transactions from Backend
