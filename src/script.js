@@ -1,5 +1,41 @@
 const app = new App();
 
+// Update the DOM with number values
+function updateDOMValues(transaction) {
+  const balance = document.getElementById('balance');
+  const income = document.getElementById('income');
+  const expense = document.getElementById('expense');
+
+  balance.innerText = `$${transaction.accountBalance}`;
+  if (transaction.accountBalance < 0) {
+    balance.classList.add('negative-balance');
+  } else {
+    balance.classList.remove('negative-balance');
+  }
+
+  income.innerText = `+$${transaction.totalIncome}`;
+  expense.innerText = `-$${transaction.totalExpense}`;
+}
+
+// Reset Transactions list and render content and values
+function init() {
+  const list = document.getElementById('transactions-list');
+  list.innerHTML = '';
+
+  Transaction.all.forEach(transaction => {
+    list.innerHTML += transaction.renderListItem();
+    updateDOMValues(transaction);
+  });
+
+  if (Transaction.all.length === 0) {
+    document.getElementById('balance').innerText = `$${0}`;
+    document.getElementById('income').innerText = `$${0}`;
+    document.getElementById('expense').innerText = `$${0}`;
+  }
+  
+  app.attatchBtnEventListeners();  
+}
+
 // Create transactions from fetched data and display them in the DOM
 function createTransactions() {
   app.adapter.fetchTransactions().then(transactions => {
@@ -95,42 +131,6 @@ function updateFormHandler(event) {
   app.adapter.patchTransaction(transaction, id).then(updatedData => updateTransaction(updatedData.data.attributes, updatedData.data.id)).catch(error => console.log(error));
 
   document.getElementById('update-modal').classList.remove('show-modal');
-}
-
-// Update the DOM with number values
-function updateDOMValues(transaction) {
-  const balance = document.getElementById('balance');
-  const income = document.getElementById('income');
-  const expense = document.getElementById('expense');
-
-  balance.innerText = `$${transaction.accountBalance}`;
-  if (transaction.accountBalance < 0) {
-    balance.classList.add('negative-balance');
-  } else {
-    balance.classList.remove('negative-balance');
-  }
-
-  income.innerText = `+$${transaction.totalIncome}`;
-  expense.innerText = `-$${transaction.totalExpense}`;
-}
-
-// Reset Transactions list and render content and values
-function init() {
-  const list = document.getElementById('transactions-list');
-  list.innerHTML = '';
-
-  Transaction.all.forEach(transaction => {
-    list.innerHTML += transaction.renderListItem();
-    updateDOMValues(transaction);
-  });
-
-  if (Transaction.all.length === 0) {
-    document.getElementById('balance').innerText = `$${0}`;
-    document.getElementById('income').innerText = `$${0}`;
-    document.getElementById('expense').innerText = `$${0}`;
-  }
-  
-  app.attatchBtnEventListeners();  
 }
 
 // Get all Transactions & Attach Event Listeners upon DOM Load
