@@ -72,7 +72,7 @@ function createFormHandler(event) {
     kind: kind
   };
   
-  app.adapter.createTransaction(transaction).then(newTransaction => addNewTransaction(newTransaction.data));
+  app.adapter.createTransaction(transaction).then(newTransaction => addNewTransaction(newTransaction.data)).catch(error => console.log(error));
   // addNewTransaction(transaction);
   modal.classList.remove('show-modal');
   event.target.reset();
@@ -92,7 +92,7 @@ function updateFormHandler(event) {
     kind: kind
   };
   
-  app.adapter.patchTransaction(transaction, id).then(updatedData => updateTransaction(updatedData.data.attributes, updatedData.data.id));
+  app.adapter.patchTransaction(transaction, id).then(updatedData => updateTransaction(updatedData.data.attributes, updatedData.data.id)).catch(error => console.log(error));
 
   document.getElementById('update-modal').classList.remove('show-modal');
 }
