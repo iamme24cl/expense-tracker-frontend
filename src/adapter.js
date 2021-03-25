@@ -16,10 +16,30 @@ class Adapter {
       },
       body: JSON.stringify(transaction)
     })
-      .then(response => response.json())
+      .then(response => response.json());
   }
 
-  patchTransaction() {
-    
+  patchTransaction(transaction, id) {
+    return fetch(`${this.baseUrl}/accounts/1/transactions/${id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(transaction)
+    })
+      .then(response => response.json());
+  }
+
+  destroyTransaction(id) {
+    return   fetch(`${this.baseUrl}/accounts/1/transactions/${id}`, {
+      method: 'DELETE',
+      headers: {
+        "Content-Type": "application/js",
+        "Accept": "application/js"
+      },
+      body: null
+    })
+      .then(response => response.json())
   }
 }

@@ -51,14 +51,16 @@ class App {
     editForm.addEventListener('submit', event => updateFormHandler(event));
   }
 
+  // Attactch Event Listeners to all `edit` and `delete` buttons
+  // that are generated dynamically
   attatchBtnEventListeners() {
     const editBtns = Array.from(document.getElementsByClassName('edit-btn')); 
     
     editBtns.forEach (btn => {
       btn.addEventListener('click', e => {
-        const editId = +e.target.dataset.id;
+        const editID = +e.target.dataset.id;
         // console.log(editId);
-        showUpdateForm(editId);
+        showUpdateForm(editID);
         
       });
     });
@@ -67,9 +69,9 @@ class App {
   
     deleteBtns.forEach(btn => {
       btn.addEventListener('click', e => {
-        const deleteId = +e.target.dataset.id;
+        const deleteID = +e.target.dataset.id;
         
-        deleteTransaction(deleteId);
+        this.adapter.destroyTransaction(deleteID).then(data => deleteTransaction(data));
       });
     });
   }
