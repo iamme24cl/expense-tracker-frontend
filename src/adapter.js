@@ -1,19 +1,24 @@
 class Adapter {
   constructor() {
     this.baseUrl = 'http://localhost:3000/api/v1';
+    this.headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    };
+  }
+
+  get(url) {
+    return fetch(url).then(res => res.json());
   }
 
   fetchTransactions() {
-    return fetch(`${this.baseUrl}/accounts/1/transactions`).then(res => res.json());
+    return this.get(`${this.baseUrl}/accounts/1/transactions`);
   }
 
   createTransaction(transaction) {
     return  fetch(`${this.baseUrl}/accounts/1/transactions`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
+      headers: this.headers,
       body: JSON.stringify(transaction)
     })
       .then(response => response.json());
@@ -22,10 +27,7 @@ class Adapter {
   patchTransaction(transaction, id) {
     return fetch(`${this.baseUrl}/accounts/1/transactions/${id}`, {
       method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
+      headers: this.headers,
       body: JSON.stringify(transaction)
     })
       .then(response => response.json());
@@ -34,10 +36,7 @@ class Adapter {
   destroyTransaction(id) {
     return   fetch(`${this.baseUrl}/accounts/1/transactions/${id}`, {
       method: 'DELETE',
-      headers: {
-        "Content-Type": "application/js",
-        "Accept": "application/js"
-      },
+      headers: this.headers,
       body: null
     })
       .then(response => response.json())
