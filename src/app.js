@@ -1,8 +1,8 @@
 class App {
   constructor() {
     this.adapter = new Adapter();
-    this.updateDOMValues = this.updateDOMValues.bind(this);
     this.init = this.init.bind(this);
+    this.updateDOMValues = this.updateDOMValues.bind(this);
     this.createTransactions = this.createTransactions.bind(this);
     this.addNewTransaction = this.addNewTransaction.bind(this);
     this.updateTransaction = this.updateTransaction.bind(this);
@@ -151,9 +151,9 @@ class App {
       totalIncome: transaction.account.total_income
     }
 
-    const updatedTransaction = Transaction.findById(+id);
+    const transactionToUpdate = Transaction.findById(+id);
 
-    Object.assign(updatedTransaction, data);
+    transactionToUpdate.update(data);
 
     this.init();  
   }

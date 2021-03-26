@@ -1,8 +1,7 @@
 const app = new App();
 
-
-
-// Get all Transactions & Attach Event Listeners upon DOM Load
+// Attach all Event Listeners and initialize
+// fetching and creating transactions  upon DOM Load
 document.addEventListener('DOMContentLoaded', () => {
   app.attachEventListeners();
 

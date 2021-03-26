@@ -38,6 +38,10 @@ class Transaction {
     document.getElementById('edit-kind').value = this.kind;
     document.getElementById('edit-amount').value = this.amount;
   }
+
+  update(transaction) {
+    Object.assign(this, transaction);
+  }
 }
 
 Transaction.all = [];
