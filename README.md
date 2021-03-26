@@ -14,4 +14,5 @@ License
 
 
 Code of Conduct
-Everyone interacting in the expense-tracker-frontend project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the code of conduct.
+Everyone interacting in the expense-tracker-frontend project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the 
+[code of conduct](https://github.com/iamme24cl/expense-tracker-frontend/blob/main/CODE_OF_CONDUCT.md).
