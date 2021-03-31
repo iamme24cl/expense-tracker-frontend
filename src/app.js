@@ -1,6 +1,7 @@
 class App {
   constructor() {
     this.adapter = new Adapter();
+
     this.init = this.init.bind(this);
     this.updateDOMValues = this.updateDOMValues.bind(this);
     this.createTransactions = this.createTransactions.bind(this);
@@ -85,7 +86,7 @@ class App {
     });
   }
 
-  // Update the DOM with number values
+  // Update the DOM with current Account balances
   updateDOMValues(transaction) {
     const balance = document.getElementById('balance');
     const income = document.getElementById('income');
@@ -166,7 +167,6 @@ class App {
 
   // Reset the Transactions array and refetch Transactions
   resetTransactions(data) {   
-    // console.log(data);    
     Transaction.all = [];
     
     this.createTransactions();

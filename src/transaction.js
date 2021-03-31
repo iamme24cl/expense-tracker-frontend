@@ -25,7 +25,9 @@ class Transaction {
     }
   }
 
-
+  update(transaction) {
+    Object.assign(this, transaction);
+  }
 
   renderListItem() {
     let sign = this.kind == "income" ? "+" : "-";
@@ -50,11 +52,7 @@ class Transaction {
     document.getElementById('edit-description').value = this.description;
     document.getElementById('edit-kind').value = this.kind;
     document.getElementById('edit-amount').value = this.amount;
-  }
-
-  update(transaction) {
-    Object.assign(this, transaction);
-  }
+  } 
 }
 
 Transaction.all = [];
