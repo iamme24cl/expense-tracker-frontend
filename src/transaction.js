@@ -4,15 +4,28 @@ class Transaction {
     this.description = transaction.attributes.description;
     this.amount = transaction.attributes.amount; 
     this.kind = transaction.attributes.kind; 
-    this.accountBalance = transaction.attributes.account.balance;
-    this.totalIncome = transaction.attributes.account.total_income;
-    this.totalExpense = transaction.attributes.account.total_expense;
+    this.accountID = +transaction.attributes.account.id
+    
     Transaction.all.push(this);
   }
 
   static findById(id) {
     return this.all.find(transaction => transaction.id === id);
   }
+
+  updateAccount(transaction) {
+    const account = Account.findById(this.accountID);
+
+    if (account !== undefined) {      
+      account.updateAccountBalances(transaction);
+    } else {
+      const newAccount = new Account(this.accountID);
+
+      newAccount.updateAccountBalances(transaction);
+    }
+  }
+
+
 
   renderListItem() {
     let sign = this.kind == "income" ? "+" : "-";

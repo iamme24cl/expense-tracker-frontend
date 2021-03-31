@@ -6,7 +6,7 @@ class App {
     this.createTransactions = this.createTransactions.bind(this);
     this.addNewTransaction = this.addNewTransaction.bind(this);
     this.updateTransaction = this.updateTransaction.bind(this);
-    this.deleteTransaction = this.deleteTransaction.bind(this);
+    this.resetTransactions = this.resetTransactions.bind(this);
     this.showUpdateForm = this.showUpdateForm.bind(this);
     this.createFormHandler = this.createFormHandler.bind(this);
     this.updateFormHandler = this.updateFormHandler.bind(this);
@@ -69,8 +69,7 @@ class App {
       btn.addEventListener('click', e => {
         const editID = +e.target.dataset.id;
         // console.log(editId);
-        this.showUpdateForm(editID);
-        
+        this.showUpdateForm(editID);        
       });
     });
   
@@ -80,7 +79,8 @@ class App {
       btn.addEventListener('click', e => {
         const deleteID = +e.target.dataset.id;
         
-        this.adapter.destroyTransaction(deleteID).then(data => this.deleteTransaction(data));
+        this.adapter.destroyTransaction(deleteID)
+          .then(data => this.resetTransactions(data));
       });
     });
   }
@@ -90,16 +90,18 @@ class App {
     const balance = document.getElementById('balance');
     const income = document.getElementById('income');
     const expense = document.getElementById('expense');
-
-    balance.innerText = `$${transaction.accountBalance}`;
-    if (transaction.accountBalance < 0) {
+    
+    const account = Account.findById(transaction.accountID);
+  
+    balance.innerText = `$${account.balance}`;
+    if (account.balance < 0) {
       balance.classList.add('negative-balance');
     } else {
       balance.classList.remove('negative-balance');
     }
-
-    income.innerText = `+$${transaction.totalIncome}`;
-    expense.innerText = `-$${transaction.totalExpense}`;
+  
+    income.innerText = `+$${account.totalIncome}`;
+    expense.innerText = `-$${account.totalExpense}`;
   }
 
   // Reset Transactions list and render content and values
@@ -112,6 +114,7 @@ class App {
       this.updateDOMValues(transaction);
     });
 
+    // Set balances to $0 when Transaction array is empty -- no transaction left for reference
     if (Transaction.all.length === 0) {
       document.getElementById('balance').innerText = `$${0}`;
       document.getElementById('income').innerText = `$${0}`;
@@ -123,11 +126,14 @@ class App {
 
   // Create transactions from fetched data and display them in the DOM
   createTransactions() {
-    this.adapter.fetchTransactions().then(transactions => {
-      transactions.data.forEach(transaction => {
-        // console.log(transaction);
-        new Transaction(transaction);      
-      });
+    this.adapter.fetchTransactions()
+      .then(transactions => {
+        transactions.data.forEach(transaction => {
+          // console.log(transaction);
+          const newTransaction = new Transaction(transaction); 
+        
+          newTransaction.updateAccount(transaction);
+        });
 
       this.init();
     }); 
@@ -135,37 +141,37 @@ class App {
 
   // Add New transaction and update DOM
   addNewTransaction(transaction) {
-    new Transaction(transaction);
+    new Transaction(transaction).updateAccount(transaction);
 
     this.init(); 
   }
 
   // Update transaction and update DOM
-  updateTransaction(transaction, id) {
+  updateTransaction(transaction) {
     const data = {
-      description: transaction.description,
-      kind: transaction.kind,
-      amount: transaction.amount,
-      accountBalance: transaction.account.balance,
-      totalExpense:  transaction.account.total_expense,
-      totalIncome: transaction.account.total_income
+      description: transaction.attributes.description,
+      kind: transaction.attributes.kind,
+      amount: transaction.attributes.amount,
+      accountID: +transaction.attributes.account.id
     }
 
-    const transactionToUpdate = Transaction.findById(+id);
+    const transactionToUpdate = Transaction.findById(+transaction.id);
 
     transactionToUpdate.update(data);
+
+    transactionToUpdate.updateAccount(transaction);
 
     this.init();  
   }
 
-  // Delete Transaction and update the DOM
-  deleteTransaction(data) {   
-    // console.log(data);
-    alert(data.message);
-
+  // Reset the Transactions array and refetch Transactions
+  resetTransactions(data) {   
+    // console.log(data);    
     Transaction.all = [];
     
     this.createTransactions();
+    
+    alert(data.message);
   }
 
   // Show Update Form Modal, insert existing data, attach event listener to the 
@@ -177,6 +183,7 @@ class App {
     const transaction = Transaction.findById(transactionID);
     transaction.insertUpdateFormData();
   };
+
 
   // Form Handlers --------------------------------------
 
@@ -193,7 +200,10 @@ class App {
       kind: kind
     };
     
-    this.adapter.createTransaction(transaction).then(newTransaction => this.addNewTransaction(newTransaction.data)).catch(error => console.log(error));
+    this.adapter.createTransaction(transaction)
+      .then(newTransaction => this.addNewTransaction(newTransaction.data))
+      .catch(error => console.log(error));
+
     // addNewTransaction(transaction);
     modal.classList.remove('show-modal');
     event.target.reset();
@@ -213,7 +223,9 @@ class App {
       kind: kind
     };
     
-    this.adapter.patchTransaction(transaction, id).then(updatedData => this.updateTransaction(updatedData.data.attributes, updatedData.data.id)).catch(error => console.log(error));
+    this.adapter.patchTransaction(transaction, id)
+      .then(updatedData => this.updateTransaction(updatedData.data))
+      .catch(error => console.log(error));
 
     document.getElementById('update-modal').classList.remove('show-modal');
   }
