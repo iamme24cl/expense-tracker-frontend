@@ -1,6 +1,7 @@
-Keep track of your income and expense!
-This is the front end.
+Keep track of your income and expenses!
+This is a small one page application. The front end is built with vanilla JavaScript and fetches data from api built with Ruby on Rails.
 
+This is the front end.
 Here is the link to my back-end....
 https://github.com/iamme24cl/expense-tracker-backend
 
