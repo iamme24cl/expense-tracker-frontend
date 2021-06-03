@@ -11,7 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
   mode.addEventListener('click', () => {
     document.body.classList.toggle('mode');
     document.getElementById('inc-exp-container').classList.toggle('mode');
-    document.getElementsByClassName('fa-edit').classList.toggle('mode');
+    document.getElementById('transactions-list').classList.toggle('mode');
+    document.getElementsByClassName('.fa.fa-edit').classList.toggle('mode');
   });
 });
 
