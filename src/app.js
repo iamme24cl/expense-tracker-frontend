@@ -22,6 +22,7 @@ class App {
     const closeUpdateModal = document.getElementById('close-update-modal');
     const createForm = document.getElementById('form');
     const editForm = document.getElementById('edit-form');
+    const mode = document.getElementById('mode');
 
     // Toggle nav
     toggleBtn.addEventListener('click', () => {
@@ -52,6 +53,14 @@ class App {
       } else if (e.target == updateModal) {
         updateModal.classList.remove('show-modal');
       } 
+    });
+
+    // Toggle Dark and Light Mode
+    mode.addEventListener('click', () => {
+      mode.classList.toggle('dark-mode')
+      document.body.classList.toggle('mode');
+      document.getElementById('inc-exp-container').classList.toggle('mode');
+      document.getElementById('transactions-list').classList.toggle('mode');
     });
 
     // Listen to submit event on form for new transaction

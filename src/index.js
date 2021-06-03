@@ -5,14 +5,7 @@ const app = new App();
 document.addEventListener('DOMContentLoaded', () => {
   app.attachEventListeners();
 
-  app.createTransactions();
-  const mode = document.getElementById('mode');
+  app.createTransactions();  
   
-  mode.addEventListener('click', () => {
-    document.body.classList.toggle('mode');
-    document.getElementById('inc-exp-container').classList.toggle('mode');
-    document.getElementById('transactions-list').classList.toggle('mode');
-    document.getElementsByClassName('.fa.fa-edit').classList.toggle('mode');
-  });
 });
 
