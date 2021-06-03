@@ -129,6 +129,8 @@ h4 {
   width: 350px;
 }
 
+
+
 .inc-exp-container > div {
   flex: 1;
   text-align: center;
@@ -301,7 +303,20 @@ h4 {
   }
 }
 
+/* Dark Mode */
 
+body.mode {
+  background-color: black;
+  color: white;
+}
+
+.inc-exp-container.mode {
+  color: black;
+}
+
+.fa.fa-edit.mode {
+  color: whitesmoke;
+}
 
 
 
