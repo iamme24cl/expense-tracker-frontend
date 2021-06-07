@@ -33,13 +33,6 @@ Ruby on Rails
 ## Project Status
 Project is: _in progress_ . I intend to add more features to this application as I learn new skills.
 
-## Acknowledgements
-Give credit here.
-- This project was inspired by...
-- This project was based on [this tutorial](https://www.example.com).
-- Many thanks to...
-
-
 ## Contact
 Created by [@iamme24cl](https://github.com/iamme24cl) - feel free to contact me!
 
