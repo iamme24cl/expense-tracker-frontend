@@ -6,7 +6,7 @@
   Here is the link to my back-end....
   https://github.com/iamme24cl/expense-tracker-backend
 
-> Live demo [_here_](https://youtu.be/id_dLnYas-U). 
+> Live demo [_here_](https://www.loom.com/share/84dfa2a1fc534df6a8b1349f00de3ec9). 
 
 ## Table of Contents
 * [General Info](#general-information)
@@ -32,13 +32,6 @@ Ruby on Rails
 
 ## Project Status
 Project is: _in progress_ . I intend to add more features to this application as I learn new skills.
-
-## Acknowledgements
-Give credit here.
-- This project was inspired by...
-- This project was based on [this tutorial](https://www.example.com).
-- Many thanks to...
-
 
 ## Contact
 Created by [@iamme24cl](https://github.com/iamme24cl) - feel free to contact me!
