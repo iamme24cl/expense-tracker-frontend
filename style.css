@@ -108,6 +108,10 @@ h1 {
   letter-spacing: 1px;
 }
 
+.balance {
+  text-align: center;
+}
+
 .negative-balance {
   color: #c0392b;
 }
@@ -119,7 +123,7 @@ h3 {
 }
 
 h4 {
-  margin: 15px 0 10px;
+  margin: 15px auto 10px;
 }
 
 .inc-exp-container {
@@ -164,7 +168,7 @@ h4 {
 .transactions-list {
   list-style-type: none;
   padding: 0;
-  width: 80%;
+  width: 450px;
   margin-bottom: 40px;
 }
 
@@ -212,7 +216,7 @@ h4 {
 }
 
 .cta-btn {
-  width: 80%;
+  width: 450px;
   font-weight: bold;  
 }
 
@@ -331,8 +335,8 @@ body.mode {
   border-radius: 50%;
   font-size: 20px;
   position: absolute;
-  top: 40px;
-  right: 50px;
+  top: 4%;
+  right: 8%;
 }
 
 .mode.dark-mode {
@@ -342,6 +346,14 @@ body.mode {
 @media only screen and (max-width: 600px)  {
   h1 {
     font-size: 18px;
+  }
+
+  .transactions-list, .cta-btn, .inc-exp-container {
+    width: 80%;
+  }
+
+  .form-modal {
+    width: 85%;
   }
 }
 
