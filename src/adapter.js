@@ -7,38 +7,39 @@ class Adapter {
     };
   }
 
-  get(url) {
-    return fetch(url).then(res => res.json());
+  async get(url) {
+    const res = await fetch(url);
+    return await res.json();
   }
 
   fetchTransactions() {
     return this.get(`${this.baseUrl}/accounts/1/transactions`);
   }
 
-  createTransaction(transaction) {
-    return  fetch(`${this.baseUrl}/accounts/1/transactions`, {
+  async createTransaction(transaction) {
+    const response = await fetch(`${this.baseUrl}/accounts/1/transactions`, {
       method: 'POST',
       headers: this.headers,
       body: JSON.stringify(transaction)
-    })
-      .then(response => response.json());
+    });
+    return await response.json();
   }
 
-  patchTransaction(transaction, id) {
-    return fetch(`${this.baseUrl}/accounts/1/transactions/${id}`, {
+  async patchTransaction(transaction, id) {
+    const response = await fetch(`${this.baseUrl}/accounts/1/transactions/${id}`, {
       method: 'PATCH',
       headers: this.headers,
       body: JSON.stringify(transaction)
-    })
-      .then(response => response.json());
+    });
+    return await response.json();
   }
 
-  destroyTransaction(id) {
-    return   fetch(`${this.baseUrl}/accounts/1/transactions/${id}`, {
+  async destroyTransaction(id) {
+    const response = await fetch(`${this.baseUrl}/accounts/1/transactions/${id}`, {
       method: 'DELETE',
       headers: this.headers,
       body: null
-    })
-      .then(response => response.json())
+    });
+    return await response.json();
   }
 }
