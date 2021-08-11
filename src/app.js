@@ -87,9 +87,9 @@ class App {
   
     deleteBtns.forEach(btn => {
       btn.addEventListener('click', e => {
-        const deleteID = +e.target.dataset.id;
-        
-        this.adapter.destroyTransaction(deleteID)
+        const id = +e.target.dataset.id;
+        const transaction = Transaction.findById(id)
+        this.adapter.destroyTransaction(transaction.accountID, id)
           .then(data => this.resetTransactions(data));
       });
     });
@@ -135,8 +135,8 @@ class App {
   }
 
   // Create transactions from fetched data and display them in the DOM
-  createTransactions() {
-    this.adapter.fetchTransactions()
+  createTransactions(accountID) {
+    this.adapter.fetchTransactions(accountID)
       .then(transactions => {
         transactions.data.forEach(transaction => {
           // console.log(transaction);
@@ -177,10 +177,7 @@ class App {
   // Reset the Transactions array and refetch Transactions
   resetTransactions(data) {   
     Transaction.all = [];
-    
-    this.createTransactions();
-    
-    alert(data.message);
+    this.createTransactions(data.id);
   }
 
   // Show Update Form Modal, insert existing data, attach event listener to the 
@@ -209,7 +206,7 @@ class App {
       kind: kind
     };
     
-    this.adapter.createTransaction(transaction)
+    this.adapter.createTransaction(transaction, Account.all[0].id)
       .then(newTransaction => this.addNewTransaction(newTransaction.data))
       .catch(error => console.log(error));
 
@@ -232,7 +229,7 @@ class App {
       kind: kind
     };
     
-    this.adapter.patchTransaction(transaction, id)
+    this.adapter.patchTransaction(transaction, transaction.accountID, id)
       .then(updatedData => this.updateTransaction(updatedData.data))
       .catch(error => console.log(error));
 
