@@ -341,6 +341,36 @@ body.mode {
   background-color: dimgray;
 }
 
+.login-modal-container {
+  background-color: rgba(0, 0, 0, 0.6);
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: auto;
+}
+
+.login-modal-container.hide-modal {
+  display: none;
+}
+
+.signup-modal-container {
+  background-color: rgba(0, 0, 0, 0.6);
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: auto;
+}
+
+.signup-modal-container.show-modal {
+  display: block;
+}
+
 
 
 /* Media Queries */

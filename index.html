@@ -4,13 +4,15 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+<!--   
   <link 
     rel="stylesheet" 
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" 
     integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" 
     crossorigin="anonymous" 
-  />
+  /> -->
+  <script src="https://kit.fontawesome.com/05f4994bb9.js" crossorigin="anonymous"></script>
+
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="./styles/index.css">
   <title>Expense Tracker</title>
@@ -35,9 +37,7 @@
     <h1>Expense Tracker</h1>   
 
     <button id="mode" class="mode"><i class="far fa-lightbulb"></i></button>
-  </header>
-
-  
+  </header>  
   
   <div class="container t-container">
     <div class="balance">
@@ -71,6 +71,63 @@
       <i class="fa fa-plus" aria-hidden="true"></i>
       ADD TRANSACTION
     </button>
+  </div>
+
+   <!-- Modal for Login Form -->
+   <div class="login-modal-container" id="login-modal">
+    <div class="form-modal">
+      <button class="close-btn" id="close-login-modal">
+        <i class="fa fa-times"></i>
+      </button>
+
+      <div class="modal-header">
+        <h4><i style="font-size: 16px;" class="fa fa-sign-in" aria-hidden="true"></i> Sign In 
+          <span style="margin: 0 10px">or</span> <button id="sign-up" class="btn btn-light">Sign Up</button></h4>        
+      </div>
+
+      <form id="login-form" class="modal-form">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" placeholder="Enter Account Name" class="form-control">
+        </div>
+
+      
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Enter Password" class="form-control">
+        </div>
+    
+        <input type="submit" value="Submit" class="submit-btn btn btn-dark">
+      </form> 
+    </div>
+  </div>
+
+  <!-- Modal for Sign Up Form -->
+  <div class="signup-modal-container" id="signup-modal">
+    <div class="form-modal">
+      <button class="close-btn" id="close-signup-modal">
+        <i class="fa fa-times"></i>
+      </button>
+
+      <div class="modal-header">
+        <h4>Sign Up</h4>        
+      </div>
+
+      <form id="signup-form" class="modal-form">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" placeholder="Enter Account Name" class="form-control">
+        </div>
+
+      
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Enter Password" class="form-control">
+        </div>
+    
+        <input type="submit" value="Submit" class="submit-btn btn btn-dark">
+      </form> 
+    </div>
   </div>
 
   <!-- Modal for Create Form -->

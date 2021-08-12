@@ -16,6 +16,15 @@ class Adapter {
     return await res.json();
   }
 
+  async postSignUp(data) {
+    const res = await fetch(`${this.baseUrl}/accounts/`, {
+      method: 'POST',
+      headers: this.headers,
+      body: JSON.stringify(data)
+    });
+    return await res.json();
+  }
+
   async get(url) {
     const res = await fetch(url);
     return await res.json();
