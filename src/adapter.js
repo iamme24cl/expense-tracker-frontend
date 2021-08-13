@@ -17,7 +17,7 @@ class Adapter {
   }
 
   async postSignUp(data) {
-    const res = await fetch(`${this.baseUrl}/accounts/`, {
+    const res = await fetch(`${this.baseUrl}accounts/`, {
       method: 'POST',
       headers: this.headers,
       body: JSON.stringify(data)
@@ -31,11 +31,11 @@ class Adapter {
   }
 
   fetchTransactions(id) {
-    return this.get(`${this.baseUrl}/accounts/${id}/transactions`);
+    return this.get(`${this.baseUrl}accounts/${id}/transactions`);
   }
 
   async createTransaction(transaction, accountID) {
-    const response = await fetch(`${this.baseUrl}/accounts/${accountID}/transactions`, {
+    const response = await fetch(`${this.baseUrl}accounts/${accountID}/transactions`, {
       method: 'POST',
       headers: this.headers,
       body: JSON.stringify(transaction)
@@ -44,7 +44,7 @@ class Adapter {
   }
 
   async patchTransaction(transaction, accountID, id) {
-    const response = await fetch(`${this.baseUrl}/accounts/${accountID}/transactions/${id}`, {
+    const response = await fetch(`${this.baseUrl}accounts/${accountID}/transactions/${id}`, {
       method: 'PATCH',
       headers: this.headers,
       body: JSON.stringify(transaction)
@@ -53,7 +53,7 @@ class Adapter {
   }
 
   async destroyTransaction(accountID, id) {
-    const response = await fetch(`${this.baseUrl}/accounts/${accountID}/transactions/${id}`, {
+    const response = await fetch(`${this.baseUrl}accounts/${accountID}/transactions/${id}`, {
       method: 'DELETE',
       headers: this.headers,
       body: null

@@ -17,7 +17,9 @@ class App {
   }
 
   attachEventListeners() {
-    const toggleBtn = document.getElementById('toggle');
+    // const toggleBtn = document.getElementById('toggle');
+    const login = document.getElementById('login');
+    const signup = document.getElementById('signup');
     const loginModal = document.getElementById('login-modal')
     const closeLoginModal = document.getElementById('close-login-modal')
     const modal = document.getElementById('modal');
@@ -35,13 +37,22 @@ class App {
     const closeSignupModal = document.getElementById('close-signup-modal')
 
     // Toggle nav
-    toggleBtn.addEventListener('click', () => {
-      document.body.classList.toggle('show-nav');
-    });
+    // toggleBtn.addEventListener('click', () => {
+    //   document.body.classList.toggle('show-nav');
+    // });
+
+      login.addEventListener('click', () => {
+        loginModal.classList.remove('hide-modal');
+      })
+
+      signup.addEventListener('click', () => {
+        signupModal.classList.add('show-modal');
+      })
 
      // Close Login form Modal
      closeLoginModal.addEventListener('click', () => {
       loginModal.classList.add('hide-modal');
+      console.log('click')
     });
 
     // Show Create form Modal 
@@ -63,6 +74,7 @@ class App {
     signUpBtn.addEventListener('click', () => {
       loginModal.classList.add('hide-modal')
       signupModal.classList.add('show-modal')
+      console.log('clcic')
     })
 
     // Close Sign Up Modal
@@ -89,8 +101,11 @@ class App {
       document.getElementById('transactions-list').classList.toggle('mode');
     });
 
-    // Listern to submit event on login form
-    loginForm.addEventListener('submit', event => this.loginFormHandler(event))
+    // Listen to submit event on login form
+    loginForm.addEventListener('submit', event => this.loginFormHandler(event));
+
+    // Listen to submit event on signup form
+    signUpForm.addEventListener('submit', event => this.signUpFormHandler(event))
 
     // Listen to submit event on form for new transaction
     createForm.addEventListener('submit', event => this.createFormHandler(event));
@@ -252,15 +267,16 @@ class App {
     const signUpModal = document.getElementById('signup-modal')
 
     event.preventDefault();
-    const name = document.getElementById('name').value;
-    const password = document.getElementById('password').value;
+    const name = document.getElementById('newName').value;
+    const password = document.getElementById('newPassword').value;
 
-    const signUpData = {name, password}
+    const signUpData = {account: {name, password}}
 
     this.adapter.postSignUp(signUpData)
     .then(data => {
       console.log('data:', data)
-      this.createTransactions(data.id); 
+      const newAccount = new Account(data.id)
+      this.createTransactions(newAccount.id); 
       data.id ? this.loggedIn = true : false
     })
     .catch((error) => {
@@ -272,7 +288,7 @@ class App {
       console.log(this.loggedIn);
     }, 1000);
 
-    loginModal.classList.add('hide-modal')
+    signUpModal.classList.remove('show-modal')
   }
 
 
