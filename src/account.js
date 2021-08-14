@@ -1,6 +1,7 @@
 class Account {
-  constructor(id) {
+  constructor(id, name) {
     this.id = +id,
+    this.name = name,
     this.balance = 0,
     this.totalIncome = 0,
     this.totalExpense = 0

@@ -4,7 +4,8 @@ class Transaction {
     this.description = transaction.attributes.description;
     this.amount = transaction.attributes.amount; 
     this.kind = transaction.attributes.kind; 
-    this.accountID = +transaction.attributes.account.id
+    this.accountID = +transaction.attributes.account.id,
+    this.accountName = transaction.attributes.account.name
     
     Transaction.all.push(this);
   }
@@ -19,7 +20,7 @@ class Transaction {
     if (account !== undefined) {      
       account.updateAccountBalances(transaction);
     } else {
-      const newAccount = new Account(this.accountID);
+      const newAccount = new Account(this.accountID, this.accountName);
 
       newAccount.updateAccountBalances(transaction);
     }

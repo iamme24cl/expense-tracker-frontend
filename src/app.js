@@ -10,6 +10,7 @@ class App {
     this.resetTransactions = this.resetTransactions.bind(this);
     this.showUpdateForm = this.showUpdateForm.bind(this);
     this.loginFormHandler = this.loginFormHandler.bind(this);
+    this.demoHandler = this.demoHandler.bind(this);
     this.signUpFormHandler = this.signUpFormHandler.bind(this);
     this.createFormHandler = this.createFormHandler.bind(this);
     this.updateFormHandler = this.updateFormHandler.bind(this);
@@ -17,8 +18,8 @@ class App {
   }
 
   attachEventListeners() {
-    // const toggleBtn = document.getElementById('toggle');
     const login = document.getElementById('login');
+    const demo = document.getElementById('demo-account');
     const signup = document.getElementById('signup');
     const loginModal = document.getElementById('login-modal')
     const closeLoginModal = document.getElementById('close-login-modal')
@@ -33,24 +34,24 @@ class App {
     const editForm = document.getElementById('edit-form');
     const mode = document.getElementById('mode');
     const signUpBtn = document.getElementById('sign-up');
-    const signupModal = document.getElementById('signup-modal')
-    const closeSignupModal = document.getElementById('close-signup-modal')
+    const signupModal = document.getElementById('signup-modal');
+    const closeSignupModal = document.getElementById('close-signup-modal');
+    
+    
+    login.addEventListener('click', () => {
+      loginModal.classList.remove('hide-modal');
+    })
 
-    // Toggle nav
-    // toggleBtn.addEventListener('click', () => {
-    //   document.body.classList.toggle('show-nav');
-    // });
+    demo.addEventListener('click', (event) => {
+      this.demoHandler(event);
+    })
 
-      login.addEventListener('click', () => {
-        loginModal.classList.remove('hide-modal');
-      })
+    signup.addEventListener('click', () => {
+      signupModal.classList.add('show-modal');
+    })
 
-      signup.addEventListener('click', () => {
-        signupModal.classList.add('show-modal');
-      })
-
-     // Close Login form Modal
-     closeLoginModal.addEventListener('click', () => {
+    // Close Login form Modal
+    closeLoginModal.addEventListener('click', () => {
       loginModal.classList.add('hide-modal');
       console.log('click')
     });
@@ -101,6 +102,13 @@ class App {
       document.getElementById('transactions-list').classList.toggle('mode');
     });
 
+    // Listen to enter keydown on login form
+    loginForm.addEventListener("keydown", (event) => {
+      if (event.keyCode === 13) {
+       this.loginFormHandler(event);
+      }
+    })
+
     // Listen to submit event on login form
     loginForm.addEventListener('submit', event => this.loginFormHandler(event));
 
@@ -141,12 +149,13 @@ class App {
 
   // Update the DOM with current Account balances
   updateDOMValues(transaction) {
+    
     const balance = document.getElementById('balance');
     const income = document.getElementById('income');
     const expense = document.getElementById('expense');
     
     const account = Account.findById(transaction.accountID);
-  
+   
     balance.innerText = `$${account.balance}`;
     if (account.balance < 0) {
       balance.classList.add('negative-balance');
@@ -160,6 +169,10 @@ class App {
 
   // Reset Transactions list and render content and values
   init() {
+    const heading = document.getElementById('heading');
+    // Set the heading of the page with current Account Name
+    heading.innerHTML = `Welcome back ${Account.all[0].name}`
+
     const list = document.getElementById('transactions-list');
     list.innerHTML = '';
 
@@ -260,6 +273,33 @@ class App {
       console.log(this.loggedIn);
     }, 1000);
 
+    loginModal.classList.add('hide-modal');
+  }
+
+  demoHandler(event) {
+    event.preventDefault();
+    const loginModal = document.getElementById('login-modal')
+
+    const name = "demo";
+    const password = "demo";
+
+    const demoData = {name, password}
+
+    this.adapter.postLogin(demoData)
+    .then(data => {
+      console.log('data:', data)
+      this.createTransactions(data.id); 
+      data.id ? this.loggedIn = true : false
+    })
+    .catch((error) => {
+      alert('Error:', error);
+    });
+
+    console.log(this.loggedIn)
+    setTimeout(() => {
+      console.log(this.loggedIn);
+    }, 1000);
+
     loginModal.classList.add('hide-modal')
   }
 
@@ -275,7 +315,7 @@ class App {
     this.adapter.postSignUp(signUpData)
     .then(data => {
       console.log('data:', data)
-      const newAccount = new Account(data.id)
+      const newAccount = new Account(data.id, data.name)
       this.createTransactions(newAccount.id); 
       data.id ? this.loggedIn = true : false
     })

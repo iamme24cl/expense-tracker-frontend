@@ -27,19 +27,16 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="collapse navbar-collapse  justify-content-end" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a id="login" class="nav-item nav-link" href="#">Login</a>
+        <a id="login" class="nav-item nav-link" href="#"><i style="font-size: 16px;" class="fa fa-sign-in" aria-hidden="true"></i> Sign In</a>
         <a id="signup" class="nav-item nav-link" href="#">Sign Up</a>
       </div>
     </div>
   </nav>
- 
-
-
-
   
   <div class="container t-container">
+    <h2 id="heading" class="text-center display-5"></h2>
     
     <div class="balance">
       <h4>Your Balance</h4>
@@ -82,11 +79,12 @@
       </button>
 
       <div class="modal-header">
-        <h4><i style="font-size: 16px;" class="fa fa-sign-in" aria-hidden="true"></i> Sign In 
-          <span style="margin: 0 10px">or</span> <button id="sign-up" class="btn btn-light">Sign Up</button></h4>        
+        <h4>Sign In</h4>        
       </div>
 
       <form id="login-form" class="modal-form">
+        <h4 class="text-center">Sign in Below or <button style="margin: 5px" id="sign-up" class="btn btn-secondary">Click here</button> to Sign up</h4>
+        <h4 class="text-center"><button id="demo-account" class="btn btn-secondary">Click here</button> to use a Demo Account</h4>
         <div class="form-group">
           <label for="name">Name</label>
           <input type="text" id="name" placeholder="Enter Account Name" class="form-control">
