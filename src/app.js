@@ -112,6 +112,12 @@ class App {
     // Listen to submit event on login form
     loginForm.addEventListener('submit', event => this.loginFormHandler(event));
 
+    signUpForm.addEventListener("keydown", (event) => {
+      if (event.keyCode === 13) {
+       this.signUpFormHandler(event);
+      }
+    })
+
     // Listen to submit event on signup form
     signUpForm.addEventListener('submit', event => this.signUpFormHandler(event))
 

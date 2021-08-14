@@ -1,6 +1,6 @@
 class Adapter {
   constructor() {
-    this.baseUrl = 'http://localhost:3000/api/v1/';
+    this.baseUrl = 'https://ancient-inlet-35124.herokuapp.com/api/v1/';
     this.headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json'
@@ -8,7 +8,7 @@ class Adapter {
   }
 
   async postLogin(data) {
-    const res = await fetch('http://localhost:3000/api/v1/login', {
+    const res = await fetch(`${this.baseUrl}login`, {
       method: 'POST',
       headers: this.headers,
       body: JSON.stringify(data)
