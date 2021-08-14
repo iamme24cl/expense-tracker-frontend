@@ -20,7 +20,7 @@ class App {
   attachEventListeners() {
     const login = document.getElementById('login');
     const demo = document.getElementById('demo-account');
-    const signup = document.getElementById('signup');
+    const signup = document.getElementById('sign-up');
     const loginModal = document.getElementById('login-modal')
     const closeLoginModal = document.getElementById('close-login-modal')
     const modal = document.getElementById('modal');
