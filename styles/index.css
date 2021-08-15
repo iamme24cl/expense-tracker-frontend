@@ -310,7 +310,17 @@ body.mode {
   .form-modal {
     width: 85%;
   }
+
+  .submit-btn {
+    margin-bottom: 10px;
+    margin-left: 10px;
+  }
+
+  .login-form-heading {
+    font-size: 16px;
+  }
 }
+
 
 
 

@@ -20,7 +20,7 @@ class App {
   attachEventListeners() {
     const login = document.getElementById('login');
     const demo = document.getElementById('demo-account');
-    const signup = document.getElementById('sign-up');
+    const signup = document.getElementById('signup');
     const loginModal = document.getElementById('login-modal')
     const closeLoginModal = document.getElementById('close-login-modal')
     const modal = document.getElementById('modal');
@@ -37,15 +37,17 @@ class App {
     const signupModal = document.getElementById('signup-modal');
     const closeSignupModal = document.getElementById('close-signup-modal');
     
-    
+    //Close login form modal
     login.addEventListener('click', () => {
       loginModal.classList.remove('hide-modal');
     })
 
+    // Sing in to demo account upon click
     demo.addEventListener('click', (event) => {
       this.demoHandler(event);
     })
 
+    // sign up new user
     signup.addEventListener('click', () => {
       signupModal.classList.add('show-modal');
     })
@@ -53,7 +55,6 @@ class App {
     // Close Login form Modal
     closeLoginModal.addEventListener('click', () => {
       loginModal.classList.add('hide-modal');
-      console.log('click')
     });
 
     // Show Create form Modal 
@@ -72,10 +73,10 @@ class App {
     });
 
     // Redirect from login to sign up form
-    signUpBtn.addEventListener('click', () => {
+    signUpBtn.addEventListener('click', (event) => {
+      event.preventDefault();
       loginModal.classList.add('hide-modal')
       signupModal.classList.add('show-modal')
-      console.log('clcic')
     })
 
     // Close Sign Up Modal
@@ -279,9 +280,11 @@ class App {
       console.log(this.loggedIn);
     }, 1000);
 
+    event.target.reset();
     loginModal.classList.add('hide-modal');
   }
 
+  // Demo Account login
   demoHandler(event) {
     event.preventDefault();
     const loginModal = document.getElementById('login-modal')
@@ -334,6 +337,7 @@ class App {
       console.log(this.loggedIn);
     }, 1000);
 
+    event.target.reset();
     signUpModal.classList.remove('show-modal')
   }
 
