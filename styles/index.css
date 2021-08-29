@@ -17,8 +17,6 @@ body {
   transition: transform 0.3s ease;
 }
 
-
-
 /* Main container with transactions */
 .container {
   display: flex;
