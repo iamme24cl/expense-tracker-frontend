@@ -282,7 +282,7 @@ class App {
     });
 
     event.target.reset();
-    
+
     loginModal.classList.add('hide-modal');
     if (name !== "" && password !== "") {
       document.getElementById('login').classList.add('hide');
@@ -303,7 +303,6 @@ class App {
 
     this.adapter.postLogin(demoData)
     .then(data => {
-      console.log('data:', data)
       this.createTransactions(data.id); 
       data.id ? this.loggedIn = true : false
     })
