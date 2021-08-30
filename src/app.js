@@ -36,6 +36,7 @@ class App {
     const signUpBtn = document.getElementById('sign-up');
     const signupModal = document.getElementById('signup-modal');
     const closeSignupModal = document.getElementById('close-signup-modal');
+    const signout = document.getElementById('logout');
     
     //Close login form modal
     login.addEventListener('click', () => {
@@ -50,6 +51,11 @@ class App {
     // sign up new user
     signup.addEventListener('click', () => {
       signupModal.classList.add('show-modal');
+    })
+
+    // logout
+    signout.addEventListener('click', () => {
+      window.location.reload();
     })
 
     // Close Login form Modal
@@ -275,13 +281,14 @@ class App {
       alert('Error:', error);
     });
 
-    console.log(this.loggedIn)
-    setTimeout(() => {
-      console.log(this.loggedIn);
-    }, 1000);
-
     event.target.reset();
+    
     loginModal.classList.add('hide-modal');
+    if (name !== "" && password !== "") {
+      document.getElementById('login').classList.add('hide');
+      document.getElementById('signup').classList.add('hide');
+      document.getElementById('logout').classList.add('show');
+    }
   }
 
   // Demo Account login
@@ -304,12 +311,10 @@ class App {
       alert('Error:', error);
     });
 
-    console.log(this.loggedIn)
-    setTimeout(() => {
-      console.log(this.loggedIn);
-    }, 1000);
-
-    loginModal.classList.add('hide-modal')
+    loginModal.classList.add('hide-modal');
+    document.getElementById('login').classList.add('hide');
+    document.getElementById('signup').classList.add('hide');
+    document.getElementById('logout').classList.add('show');
   }
 
   signUpFormHandler(event) {
@@ -332,13 +337,14 @@ class App {
       alert('Error:', error);
     });
 
-    console.log(this.loggedIn)
-    setTimeout(() => {
-      console.log(this.loggedIn);
-    }, 1000);
-
     event.target.reset();
-    signUpModal.classList.remove('show-modal')
+
+    signUpModal.classList.remove('show-modal');
+    if (name !== "" && password !== "") {
+      document.getElementById('login').classList.add('hide');
+      document.getElementById('signup').classList.add('hide');
+      document.getElementById('logout').classList.add('show');
+    }
   }
 
 

@@ -17,6 +17,23 @@ body {
   transition: transform 0.3s ease;
 }
 
+/* #login, #signup {
+  display: block;
+} */
+
+#login.hide, #signup.hide {
+  display: none;
+}
+
+#logout {
+  display: none;
+}
+
+#logout.show {
+  display: block;
+}
+
+
 /* Main container with transactions */
 .container {
   display: flex;
@@ -29,6 +46,10 @@ body {
 
 h1 {
   letter-spacing: 1px;
+}
+
+.far.fa-lightbulb:hover {
+  cursor: pointer;
 }
 
 .balance {
