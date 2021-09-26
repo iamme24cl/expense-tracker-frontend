@@ -182,6 +182,10 @@ class App {
 
   // Reset Transactions list and render content and values
   init() {
+    const placeholder = document.getElementById('placeholder');
+    if (Account.all.length !== 0) {
+      placeholder.innerHTML = ""
+    }
     const heading = document.getElementById('heading');
     // Set the heading of the page with current Account Name
     heading.innerHTML = `Welcome back ${Account.all[0].name}`
