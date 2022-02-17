@@ -6,7 +6,6 @@
   Here is the link to my back-end....
   https://github.com/iamme24cl/expense-tracker-backend
 
-> Live demo [_here_](https://www.loom.com/share/84dfa2a1fc534df6a8b1349f00de3ec9). 
 
 ## Table of Contents
 * [General Info](#general-information)
